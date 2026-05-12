@@ -34,7 +34,7 @@
                         <div class="mt-10 p-4 bg-accent-light rounded-xl border border-accent-muted">
                             <p class="text-[10px] text-accent font-bold uppercase tracking-widest mb-2 text-center leading-tight">System Info</p>
                             <div class="space-y-1 text-center">
-                                <p class="text-[10px] text-accent font-medium tracking-tighter">Laravel v{{ App::VERSION() }}</p>
+                                <p class="text-[10px] text-accent font-medium tracking-tighter">Mulia Grup System</p>
                                 <p class="text-[10px] text-accent font-medium tracking-tighter">PHP v{{ PHP_VERSION }}</p>
                             </div>
                         </div>

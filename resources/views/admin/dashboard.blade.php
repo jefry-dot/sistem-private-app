@@ -2,7 +2,7 @@
     <x-slot name="header"></x-slot>
 
     <style>
-        /* ── STAT CARDS (ProjectSend Colorful Style) ───────── */
+        /* ── STAT CARDS (Mulia Grup Colorful Style) ───────── */
         .stat-card-ps {
             border-radius: 4px;
             padding: 1.5rem;
@@ -156,9 +156,9 @@
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
-                {{-- ProjectSend news --}}
+                {{-- Mulia Grup news --}}
                 <div class="bg-white border border-strong rounded-sm overflow-hidden">
-                    <div class="p-4 border-b border-strong font-bold text-sm text-gray-600">ProjectSend news</div>
+                    <div class="p-4 border-b border-strong font-bold text-sm text-gray-600">Mulia Grup news</div>
                     <div class="p-6">
                         <span class="text-[11px] text-gray-400">27/10/2022</span>
                         <h4 class="text-ps-purple font-bold text-sm mt-1">New release: r1605</h4>
@@ -196,7 +196,7 @@
                 </div>
                 <div class="p-4 border-b border-strong">
                     <select class="w-full text-sm border-strong rounded-sm py-1.5 focus:border-ps-purple outline-none">
-                        <option>ProjectSend was updated</option>
+                        <option>Mulia Grup was updated</option>
                     </select>
                 </div>
                 <div class="flex flex-col">

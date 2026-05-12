@@ -8,7 +8,7 @@
             <div style="width: 24px; height: 24px; background: #fff; border-radius: 4px; display: flex; align-items: center; justify-content: center;">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="var(--topbar-bg)" viewBox="0 0 24 24"><path d="M13 2L3 14h9v8l10-12h-9l9-8z"/></svg>
             </div>
-            <span style="font-size: 1.125rem; font-weight: 700; color: #fff; letter-spacing: -0.02em;">ProjectSend</span>
+            <span style="font-size: 1.125rem; font-weight: 700; color: #fff; letter-spacing: -0.02em;">Mulia Grup</span>
         </div>
     </div>
 

@@ -41,7 +41,7 @@
                 @include('layouts.sidebar')
 
                 <div class="main-content">
-                    {{-- ── TOP HEADER (Dark ProjectSend Style) ── --}}
+                    {{-- ── TOP HEADER (Dark Mulia Grup Style) ── --}}
                     <header class="top-header" style="height: 64px; display: flex; align-items: center; justify-content: flex-end; padding: 0 1.5rem; background: var(--topbar-bg); border: none;">
                         <div class="flex items-center gap-6 text-[13px] font-medium text-white/90">
                             <span class="hover:text-white cursor-pointer">{{ Auth::user()->name }}</span>
