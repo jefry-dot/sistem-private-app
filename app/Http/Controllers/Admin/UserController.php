@@ -38,9 +38,9 @@ class UserController extends Controller
             $user->groups()->attach($request->groups);
         }
 
-        ActivityLogger::log('create_user', "Created new client: {$user->name}", $user);
+        ActivityLogger::log('create_user', "Membuat klien baru: {$user->name}", $user);
 
-        return redirect()->back()->with('success', "Client {$user->name} created successfully.");
+        return redirect()->back()->with('success', "Klien {$user->name} berhasil dibuat.");
     }
 
     public function pending()
@@ -52,22 +52,22 @@ class UserController extends Controller
     public function approve(User $user)
     {
         $user->update(['status' => 'active']);
-        ActivityLogger::log('approve_user', "Approved user: {$user->name}", $user);
-        return redirect()->back()->with('success', "User {$user->name} approved.");
+        ActivityLogger::log('approve_user', "Menyetujui user: {$user->name}", $user);
+        return redirect()->back()->with('success', "User {$user->name} telah disetujui.");
     }
 
     public function deactivate(User $user)
     {
         $user->update(['status' => 'inactive']);
-        ActivityLogger::log('deactivate_user', "Deactivated user: {$user->name}", $user);
-        return redirect()->back()->with('success', "User {$user->name} deactivated.");
+        ActivityLogger::log('deactivate_user', "Menonaktifkan user: {$user->name}", $user);
+        return redirect()->back()->with('success', "User {$user->name} telah dinonaktifkan.");
     }
 
     public function activate(User $user)
     {
         $user->update(['status' => 'active']);
-        ActivityLogger::log('activate_user', "Activated user: {$user->name}", $user);
-        return redirect()->back()->with('success', "User {$user->name} activated.");
+        ActivityLogger::log('activate_user', "Mengaktifkan user: {$user->name}", $user);
+        return redirect()->back()->with('success', "User {$user->name} telah diaktifkan.");
     }
 
     public function show(User $user)
@@ -90,8 +90,8 @@ class UserController extends Controller
 
     public function destroy(User $user)
     {
-        ActivityLogger::log('delete_user', "Deleted user: {$user->name}", $user);
+        ActivityLogger::log('delete_user', "Menghapus user: {$user->name}", $user);
         $user->delete();
-        return redirect()->back()->with('success', "User deleted.");
+        return redirect()->back()->with('success', "User telah dihapus.");
     }
 }

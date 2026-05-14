@@ -17,11 +17,11 @@
     <body class="font-sans text-gray-900 antialiased" style="background: url('/bg.png') repeat;">
         <div class="min-h-screen flex flex-col">
             <header class="bg-white shadow" style="border-bottom: 2px solid #ddd; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);">
-                <div class="max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8">
+                <div class="max-w-7xl mx-auto py-3 px-4 sm:py-4 sm:px-6 lg:px-8">
                     <div class="flex justify-center items-center">
-                        <h1 class="flex items-center text-2xl text-gray-800 font-bold m-0">
-                            <a href="/"><img src="/logo-2.png" width="100" height="70" alt="Logo" class="mr-4"></a>
-                            {{ config('app.name', 'Mulia Grup') }}
+                        <h1 class="flex items-center text-xl sm:text-2xl text-gray-800 font-bold m-0">
+                            <a href="/"><img src="/logo-2.png" width="80" height="56" alt="Logo" class="mr-3 sm:mr-4 sm:w-[100px] sm:h-[70px]"></a>
+                            <span class="truncate">{{ config('app.name', 'Mulia Grup') }}</span>
                         </h1>
                     </div>
                 </div>
@@ -34,7 +34,7 @@
             </div>
 
             <div class="text-center py-4 bg-white/80 border-t border-gray-200">
-                <p style="color:#093; margin: 0;"><b>Copyright &copy; CS_Team@MGF 2017</b></p>
+                <p style="color:#093; margin: 0;"><b>Copyright &copy; 2026 Mulia Grup</b></p>
             </div>
         </div>
     </body>

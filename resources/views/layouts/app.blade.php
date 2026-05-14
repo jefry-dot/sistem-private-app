@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ get_setting('site_name', config('app.name', 'Private File Sharing')) }}</title>
+        <title>{{ get_setting('site_name', config('app.name', 'Mulia Grup')) }}</title>
 
         <!-- Favicon -->
         <link rel="icon" type="image/x-icon" href="{{ get_setting('site_favicon', '/favicon.ico') }}">
@@ -33,33 +33,55 @@
         </script>
     </head>
 
-    <body class="antialiased" x-data="{ mobileMenuOpen: false }">
+    <body class="antialiased" x-data="{ sidebarOpen: false, mobileMenuOpen: false }">
         <div class="app-shell">
 
             @if(Auth::check() && Auth::user()->role === 'admin')
                 {{-- ── SIDEBAR (Admin Only) ────────────────── --}}
-                @include('layouts.sidebar')
+                <div :class="sidebarOpen ? 'admin-sidebar-wrapper open' : 'admin-sidebar-wrapper'">
+                    @include('layouts.sidebar')
+                </div>
+
+                {{-- Mobile Sidebar Overlay --}}
+                <div x-show="sidebarOpen" 
+                     @click="sidebarOpen = false" 
+                     class="fixed inset-0 bg-black/50 z-[90] lg:hidden"
+                     x-transition:enter="transition opacity-0 ease-out duration-300"
+                     x-transition:enter-start="opacity-0"
+                     x-transition:enter-end="opacity-100"
+                     x-transition:leave="transition opacity-100 ease-in duration-200"
+                     x-transition:leave-start="opacity-100"
+                     x-transition:leave-end="opacity-0">
+                </div>
 
                 <div class="main-content">
                     {{-- ── TOP HEADER (Dark Mulia Grup Style) ── --}}
-                    <header class="top-header" style="height: 64px; display: flex; align-items: center; justify-content: flex-end; padding: 0 1.5rem; background: var(--topbar-bg); border: none;">
-                        <div class="flex items-center gap-6 text-[13px] font-medium text-white/90">
-                            <span class="hover:text-white cursor-pointer">{{ Auth::user()->name }}</span>
+                    <header class="top-header" style="height: 64px; display: flex; align-items: center; justify-content: space-between; padding: 0 1.5rem; background: var(--topbar-bg); border: none;">
+                        <button @click="sidebarOpen = !sidebarOpen" class="lg:hidden text-white/90 hover:text-white p-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+                            </svg>
+                        </button>
+
+                        <div class="hidden lg:block"></div>
+
+                        <div class="flex items-center gap-4 lg:gap-6 text-[13px] font-medium text-white/90">
+                            <span class="hidden sm:inline-block hover:text-white cursor-pointer">{{ Auth::user()->name }}</span>
                             
                             <div class="flex items-center gap-1 hover:text-white cursor-pointer">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
                                 </svg>
-                                Language
+                                <span class="hidden sm:inline">Bahasa</span>
                                 <svg width="10" height="10" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path d="M19 9l-7 7-7-7"/></svg>
                             </div>
 
-                            <div class="flex items-center gap-1 hover:text-white cursor-pointer">
+                            <a href="{{ route('profile.edit') }}" class="flex items-center gap-1 hover:text-white cursor-pointer text-white/90 no-underline">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                                 </svg>
-                                My Account
-                            </div>
+                                Akun Saya
+                            </a>
 
                             <form method="POST" action="{{ route('logout') }}">
                                 @csrf
@@ -67,7 +89,7 @@
                                     <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
                                     </svg>
-                                    Logout
+                                    Keluar
                                 </button>
                             </form>
                         </div>
@@ -75,7 +97,7 @@
 
                     <x-toast />
 
-                    <main class="app-content" style="padding: 2rem; background: #f4f7f6;">
+                    <main class="app-content" style="background: #f4f7f6;">
                         <div class="content-wrapper" style="max-width: 100%;">
                             {{ $slot }}
                         </div>

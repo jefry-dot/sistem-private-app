@@ -137,7 +137,7 @@
             </div>
             <div class="topbar-brand-copy hidden sm:flex">
                 <span class="topbar-brand-title">{{ get_setting('site_name', config('app.name', 'Mulia Grup')) }}</span>
-                <span class="topbar-brand-subtitle">Private System</span>
+                <span class="topbar-brand-subtitle">Sistem Privat</span>
             </div>
         </a>
 
@@ -145,24 +145,24 @@
         <div class="topbar-nav-panel">
             <div class="topbar-nav">
                 <a href="{{ route('dashboard') }}" class="topbar-link {{ request()->routeIs('dashboard') || request()->routeIs('admin.dashboard') ? 'active' : '' }}">
-                    Dashboard
+                    Beranda
                 </a>
 
                 @if(Auth::check() && Auth::user()->role === 'admin')
                     <a href="{{ route('admin.file.index') }}" class="topbar-link {{ request()->routeIs('admin.file.*') ? 'active' : '' }}">
-                        Files
+                        File
                     </a>
                     <a href="{{ route('admin.users.index') }}" class="topbar-link {{ request()->routeIs('admin.users.*') ? 'active' : '' }}">
-                        Clients
+                        Client
                         @if($pendingCount > 0)
                             <span class="topbar-link-badge">{{ $pendingCount }}</span>
                         @endif
                     </a>
                     <a href="{{ route('admin.groups.index') }}" class="topbar-link {{ request()->routeIs('admin.groups.*') ? 'active' : '' }}">
-                        Groups
+                        Grup
                     </a>
                     <a href="{{ route('admin.settings.index') }}" class="topbar-link {{ request()->routeIs('admin.settings.*') ? 'active' : '' }}">
-                        Settings
+                        Pengaturan
                     </a>
                 @endif
             </div>
@@ -250,15 +250,17 @@
     {{-- Konten mobile nav tetap sama namun dipastikan background pekat --}}
     <div class="mobile-nav-header">
         <h3 class="mobile-nav-title">Menu Utama</h3>
-        <div class="mobile-nav-avatar">{{ strtoupper(substr(Auth::user()->name, 0, 2)) }}</div>
+        @auth
+            <div class="mobile-nav-avatar">{{ strtoupper(substr(Auth::user()->name, 0, 2)) }}</div>
+        @endauth
     </div>
     {{-- ... (links) --}}
     <div class="mobile-nav-links">
-        <a href="{{ route('dashboard') }}" class="mobile-nav-link {{ request()->routeIs('dashboard') || request()->routeIs('admin.dashboard') ? 'active' : '' }}">Dashboard</a>
-        @if(Auth::user()->role === 'admin')
-            <a href="{{ route('admin.file.index') }}" class="mobile-nav-link {{ request()->routeIs('admin.file.*') ? 'active' : '' }}">Files</a>
-            <a href="{{ route('admin.users.index') }}" class="mobile-nav-link {{ request()->routeIs('admin.users.*') ? 'active' : '' }}">Clients</a>
-            <a href="{{ route('admin.settings.index') }}" class="mobile-nav-link {{ request()->routeIs('admin.settings.*') ? 'active' : '' }}">Settings</a>
+        <a href="{{ route('dashboard') }}" class="mobile-nav-link {{ request()->routeIs('dashboard') || request()->routeIs('admin.dashboard') ? 'active' : '' }}">Beranda</a>
+        @if(Auth::check() && Auth::user()->role === 'admin')
+            <a href="{{ route('admin.file.index') }}" class="mobile-nav-link {{ request()->routeIs('admin.file.*') ? 'active' : '' }}">File</a>
+            <a href="{{ route('admin.users.index') }}" class="mobile-nav-link {{ request()->routeIs('admin.users.*') ? 'active' : '' }}">Client</a>
+            <a href="{{ route('admin.settings.index') }}" class="mobile-nav-link {{ request()->routeIs('admin.settings.*') ? 'active' : '' }}">Pengaturan</a>
         @endif
     </div>
     <div class="mobile-nav-footer">

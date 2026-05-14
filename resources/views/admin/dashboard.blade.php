@@ -104,35 +104,35 @@
         {{-- Files --}}
         <div class="stat-card-ps bg-orange-ps">
             <span class="value">{{ number_format($stats['total_files']) }}</span>
-            <span class="label">Files</span>
+            <span class="label">Berkas</span>
             <svg class="icon-bg" fill="currentColor" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6zM13 9V3.5L18.5 9H13z"/></svg>
         </div>
 
         {{-- Downloads --}}
         <div class="stat-card-ps bg-green-ps">
             <span class="value">{{ number_format($stats['total_downloads']) }}</span>
-            <span class="label">Downloads</span>
+            <span class="label">Unduhan</span>
             <svg class="icon-bg" fill="currentColor" viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
         </div>
 
         {{-- Clients --}}
         <div class="stat-card-ps bg-purple-ps">
             <span class="value">{{ number_format($stats['total_users']) }}</span>
-            <span class="label">Clients</span>
+            <span class="label">Klien</span>
             <svg class="icon-bg" fill="currentColor" viewBox="0 0 24 24"><path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
         </div>
 
         {{-- Groups --}}
         <div class="stat-card-ps bg-red-ps">
             <span class="value">2</span>
-            <span class="label">Groups</span>
+            <span class="label">Grup</span>
             <svg class="icon-bg" fill="currentColor" viewBox="0 0 24 24"><path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
         </div>
 
         {{-- System Users --}}
         <div class="stat-card-ps bg-cyan-ps">
             <span class="value">1</span>
-            <span class="label">System Users</span>
+            <span class="label">Staf Sistem</span>
             <svg class="icon-bg" fill="currentColor" viewBox="0 0 24 24"><path d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
         </div>
     </div>
@@ -140,17 +140,17 @@
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {{-- LEFT: STATISTICS --}}
         <div class="lg:col-span-2">
-            <div class="bg-white border border-strong rounded-sm p-6">
-                <div class="flex items-center justify-between mb-6">
-                    <h3 class="text-sm font-bold text-gray-600 uppercase tracking-widest">Statistics</h3>
-                    <div class="flex gap-2">
-                        <button class="tab-btn active">15 days</button>
-                        <button class="tab-btn">30 days</button>
-                        <button class="tab-btn">60 days</button>
+            <div class="bg-white border border-strong rounded-sm p-4 sm:p-6">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-6 gap-4">
+                    <h3 class="text-sm font-bold text-gray-600 uppercase tracking-widest">Statistik</h3>
+                    <div class="flex flex-wrap gap-2">
+                        <button class="tab-btn active text-[10px] sm:text-xs">15 hari</button>
+                        <button class="tab-btn text-[10px] sm:text-xs">30 hari</button>
+                        <button class="tab-btn text-[10px] sm:text-xs">60 hari</button>
                     </div>
                 </div>
 
-                <div style="height:340px;position:relative;">
+                <div style="height:340px;position:relative;" class="w-full">
                     <canvas id="downloadChart"></canvas>
                 </div>
             </div>
@@ -158,29 +158,29 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
                 {{-- Mulia Grup news --}}
                 <div class="bg-white border border-strong rounded-sm overflow-hidden">
-                    <div class="p-4 border-b border-strong font-bold text-sm text-gray-600">Mulia Grup news</div>
+                    <div class="p-4 border-b border-strong font-bold text-sm text-gray-600">Berita Mulia Grup</div>
                     <div class="p-6">
-                        <span class="text-[11px] text-gray-400">27/10/2022</span>
-                        <h4 class="text-ps-purple font-bold text-sm mt-1">New release: r1605</h4>
+                        <span class="text-[11px] text-gray-400">{{ date('d/m/Y') }}</span>
+                        <h4 class="text-ps-purple font-bold text-sm mt-1">Sistem Operasional</h4>
                         <p class="text-xs text-gray-600 mt-2 leading-relaxed">
-                            Hi everyone! A new release is out. r1605 fixes bugs introduced in the previous version while also adding a few small tweaks. Please update when...
+                            Sistem Manajemen Privat Mulia Grup telah beroperasi sepenuhnya. Anda sekarang dapat mengelola dokumen secara aman dan membagikannya kepada klien di seluruh departemen.
                         </p>
                     </div>
                 </div>
 
                 {{-- System information --}}
                 <div class="bg-white border border-strong rounded-sm overflow-hidden">
-                    <div class="p-4 border-b border-strong font-bold text-sm text-gray-600">System information</div>
+                    <div class="p-4 border-b border-strong font-bold text-sm text-gray-600">Informasi sistem</div>
                     <div class="p-4">
-                        <div class="uppercase text-[11px] font-bold text-gray-500 mb-4 tracking-widest">Software</div>
+                        <div class="uppercase text-[11px] font-bold text-gray-500 mb-4 tracking-widest">Lingkungan</div>
                         <table class="w-full text-xs text-gray-600">
                             <tr>
-                                <td class="py-1 text-right pr-4 w-1/2">Version</td>
-                                <td class="py-1 font-bold">r1605</td>
+                                <td class="py-1 text-right pr-4 w-1/2">Nama Sistem</td>
+                                <td class="py-1 font-bold">Mulia Grup Private System</td>
                             </tr>
                             <tr>
-                                <td class="py-1 text-right pr-4">Default upload max. size</td>
-                                <td class="py-1 font-bold">2048 mb.</td>
+                                <td class="py-1 text-right pr-4">Ukuran Upload Maks</td>
+                                <td class="py-1 font-bold">50 MB</td>
                             </tr>
                         </table>
                     </div>
@@ -192,11 +192,11 @@
         <div>
             <div class="activity-card">
                 <div class="activity-header flex items-center justify-between">
-                    <span>Recent activities</span>
+                    <span>Aktivitas terbaru</span>
                 </div>
                 <div class="p-4 border-b border-strong">
                     <select class="w-full text-sm border-strong rounded-sm py-1.5 focus:border-ps-purple outline-none">
-                        <option>Mulia Grup was updated</option>
+                        <option>Sistem telah diperbarui</option>
                     </select>
                 </div>
                 <div class="flex flex-col">
@@ -210,12 +210,12 @@
                     </div>
                     @empty
                     <div class="p-6 text-center text-xs text-gray-400">
-                        No activities recorded.
+                        Tidak ada aktivitas tercatat.
                     </div>
                     @endforelse
                 </div>
                 <div class="p-4 flex justify-end">
-                    <button class="bg-ps-purple text-white text-xs font-bold py-2 px-6 rounded-sm hover:opacity-90">View all</button>
+                    <a href="{{ route('admin.activity-logs.index') }}" class="bg-ps-purple text-white text-xs font-bold py-2 px-6 rounded-sm hover:opacity-90 no-underline">Lihat semua</a>
                 </div>
             </div>
         </div>
@@ -233,7 +233,7 @@
                     labels: {!! json_encode($chartData['labels']) !!},
                     datasets: [
                         {
-                            label: 'Uploads by users',
+                            label: 'Upload oleh staf',
                             data: {!! json_encode($chartData['data']) !!},
                             borderColor: '#0288d1',
                             borderWidth: 2,
@@ -242,7 +242,7 @@
                             pointRadius: 3
                         },
                         {
-                            label: 'Uploads by clients',
+                            label: 'Upload oleh klien',
                             data: [0,0,0,0,0,0,0,0,1,7,0],
                             borderColor: '#7cb342',
                             borderWidth: 2,

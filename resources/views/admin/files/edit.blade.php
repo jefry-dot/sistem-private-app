@@ -269,7 +269,7 @@
         <a href="{{ route('admin.dashboard') }}"
            style="font-size:0.8rem;color:var(--text-tertiary);text-decoration:none;transition:color 0.15s;"
            onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--text-tertiary)'">
-            Dashboard
+            Beranda
         </a>
         <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="var(--border-strong)" stroke-width="2.5">
             <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
@@ -277,12 +277,12 @@
         <a href="{{ route('admin.file.index') }}"
            style="font-size:0.8rem;color:var(--text-tertiary);text-decoration:none;transition:color 0.15s;"
            onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--text-tertiary)'">
-            File
+            Daftar Berkas
         </a>
         <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="var(--border-strong)" stroke-width="2.5">
             <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
         </svg>
-        <span style="font-size:0.8rem;font-weight:600;color:var(--text-primary);">Edit File</span>
+        <span style="font-size:0.8rem;font-weight:600;color:var(--text-primary);">Edit Berkas</span>
 
         {{-- Unsaved changes pill --}}
         <span class="change-pill" id="changePill">
@@ -313,7 +313,7 @@
 
             {{-- ── FILE INFO (read-only) ────────────────── --}}
             <div style="padding:1.5rem;">
-                <p class="section-label" style="margin-bottom:1rem;">File</p>
+                <p class="section-label" style="margin-bottom:1rem;">Berkas</p>
 
                 @php
                     $ext = strtolower($file->extension);
@@ -346,7 +346,7 @@
                         <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a2 2 0 002 2h12a2 2 0 002-2v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
                         </svg>
-                        Download
+                        Unduh
                     </a>
                 </div>
 
@@ -359,7 +359,7 @@
 
             {{-- ── METADATA ──────────────────────────────── --}}
             <div style="padding:1.5rem;">
-                <p class="section-label" style="margin-bottom:1rem;">Informasi File</p>
+                <p class="section-label" style="margin-bottom:1rem;">Informasi Berkas</p>
 
                 <div class="edit-grid">
                     <div class="form-group full">
@@ -395,7 +395,7 @@
                             id="description"
                             name="description"
                             class="form-textarea trackable"
-                            placeholder="Deskripsi singkat isi file..."
+                            placeholder="Deskripsi singkat isi berkas..."
                             rows="3"
                         >{{ old('description', $file->description) }}</textarea>
                     </div>
@@ -407,7 +407,7 @@
             {{-- ── ACCESS CONTROL ───────────────────────── --}}
             <div style="padding:1.5rem;">
                 <p class="section-label" style="margin-bottom:0.5rem;">Hak Akses</p>
-                <p class="form-hint" style="margin-bottom:1rem;">Centang klien atau grup yang boleh mengakses file ini.</p>
+                <p class="form-hint" style="margin-bottom:1rem;">Centang klien atau grup yang boleh mengakses berkas ini.</p>
 
                 {{-- User access --}}
                 @if(isset($users) && $users->count())
@@ -465,18 +465,18 @@
         </p>
         <div class="danger-zone">
             <div class="danger-zone-text">
-                <h4>Hapus File Permanen</h4>
-                <p>File akan dihapus dari server dan tidak bisa dipulihkan. Semua log download juga akan terhapus.</p>
+                <h4>Hapus Berkas Permanen</h4>
+                <p>Berkas akan dihapus dari server dan tidak bisa dipulihkan. Semua log unduhan juga akan terhapus.</p>
             </div>
             <form action="{{ route('admin.file.destroy', $file) }}" method="POST"
-                  onsubmit="return confirm('Yakin hapus file ini secara permanen? Ini tidak bisa dibatalkan.')">
+                  onsubmit="return confirm('Yakin hapus berkas ini secara permanen? Ini tidak bisa dibatalkan.')">
                 @csrf
                 @method('DELETE')
                 <button type="submit" class="btn-danger">
                     <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
                     </svg>
-                    Hapus File
+                    Hapus Berkas
                 </button>
             </form>
         </div>

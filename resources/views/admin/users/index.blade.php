@@ -11,6 +11,24 @@
         
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             
+            {{-- PAGE HEADER ──────────────────────────────── --}}
+            <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;margin-bottom:1.5rem;flex-wrap:wrap;">
+                <div>
+                    <h1 style="font-size:1.375rem;font-weight:700;letter-spacing:-0.03em;color:var(--text-primary);margin:0 0 0.25rem;">
+                        Manajemen Client
+                    </h1>
+                    <p style="font-size:0.8125rem;color:var(--text-tertiary);margin:0;">
+                        Kelola data client dan berikan akses ke grup yang sesuai.
+                    </p>
+                </div>
+                <button @click="addUserModal = true" class="btn-primary">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/>
+                    </svg>
+                    Tambah Client
+                </button>
+            </div>
+
             {{-- Flash Messages --}}
             @if(session('success'))
                 <div class="alert-success mb-6">
@@ -21,22 +39,11 @@
 
             {{-- Table Card --}}
             <div class="card overflow-hidden">
-                {{-- Card Header with Action Button --}}
-                <div class="p-4 md:p-6 border-b border-gray-100 dark:border-gray-800 flex items-center justify-between bg-gray-50/50 dark:bg-gray-900/50">
-                    <div>
-                        <div class="section-label">Daftar Client Terdaftar</div>
-                    </div>
-                    <button @click="addUserModal = true" class="btn-primary !py-2 !px-4 !rounded-lg !text-[11px] flex items-center gap-2 shadow-sm transition-all">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
-                        Tambah Client
-                    </button>
-                </div>
-
                 <div class="overflow-x-auto">
                     <table class="data-table">
                         <thead>
                             <tr>
-                                <th>Nama Client</th>
+                                <th>Nama Klien</th>
                                 <th class="hidden md:table-cell">Email</th>
                                 <th class="hidden sm:table-cell">Grup</th>
                                 <th>Status</th>
@@ -61,7 +68,7 @@
                                     @forelse($user->groups as $group)
                                         <span class="badge badge-indigo !text-[9px]">{{ $group->name }}</span>
                                     @empty
-                                        <span class="text-gray-400 italic text-[10px]">No Group</span>
+                                        <span class="text-gray-400 italic text-[10px]">Tanpa Grup</span>
                                     @endforelse
                                 </td>
                                 <td>

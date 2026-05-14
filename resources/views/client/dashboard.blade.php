@@ -1,11 +1,11 @@
 <x-app-layout>
     <x-slot name="header">
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-            <h1 class="text-xl font-bold text-primary">My Files</h1>
+            <h1 class="text-xl font-bold text-primary">Berkas Saya</h1>
             <div class="flex items-center gap-4 w-full sm:w-auto">
                 {{-- Quick search --}}
                 <div class="relative flex-1 sm:flex-none">
-                    <input type="text" id="inline-search" class="text-sm border-subtle rounded-lg pl-9 pr-4 py-1.5 focus:border-accent outline-none w-full sm:w-64" placeholder="Search files...">
+                    <input type="text" id="inline-search" class="text-sm border-subtle rounded-lg pl-9 pr-4 py-1.5 focus:border-accent outline-none w-full sm:w-64" placeholder="Cari dokumen...">
                     <svg class="absolute left-3 top-2.5 text-tertiary" xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 104.5 4.5a7.5 7.5 0 0012.15 12.15z"/>
                     </svg>
@@ -60,10 +60,10 @@
         {{-- Sidebar Categories --}}
         <aside class="flex flex-col gap-6">
             <div class="section-card p-4">
-                <p class="section-label mb-4">Categories</p>
+                <p class="section-label mb-4">Kategori</p>
                 <nav class="flex flex-col gap-1">
                     <a href="{{ route('client.dashboard') }}" class="category-item {{ !request('category') ? 'active' : '' }}">
-                        <span>All Files</span>
+                        <span>Semua File</span>
                         <span class="category-count">{{ $files->total() }}</span>
                     </a>
                     @foreach($categories as $category)
@@ -84,11 +84,11 @@
                         @foreach($files as $file)
                             <div class="google-file-item" data-search-item>
                                 <div class="google-file-path">
-                                    <span>My Files</span>
+                                    <span>File Saya</span>
                                     <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
                                         <path d="M9 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/>
                                     </svg>
-                                    <span>{{ $file->category->name ?? 'Uncategorized' }}</span>
+                                    <span>{{ $file->category->name ?? 'Tanpa Kategori' }}</span>
                                 </div>
                                 
                                 <a href="{{ route('file.view', $file) }}" class="google-file-title" target="_blank">
@@ -96,7 +96,7 @@
                                 </a>
 
                                 <div class="google-file-snippet">
-                                    {{ $file->description ?: 'No description available for this file. You can download or view the file using the links below.' }}
+                                    {{ $file->description ?: 'Tidak ada deskripsi tersedia untuk file ini. Anda dapat mengunduh atau melihat file menggunakan tautan di bawah.' }}
                                 </div>
 
                                 <div class="google-file-meta">
@@ -108,9 +108,9 @@
                                 </div>
 
                                 <div class="google-file-actions">
-                                    <a href="{{ route('file.download', $file) }}" class="google-action-link">Download File</a>
-                                    @if(strtolower($file->extension) === 'pdf')
-                                        <a href="{{ route('file.view', $file) }}" target="_blank" class="google-action-link">Quick View</a>
+                                    <a href="{{ route('file.download', $file) }}" class="google-action-link">Unduh File</a>
+                                    @if(strtolower($file->extension) === 'pdf' || in_array(strtolower($file->extension), ['jpg', 'jpeg', 'png', 'webp']))
+                                        <a href="{{ route('file.view', $file) }}" target="_blank" class="google-action-link">Lihat Cepat</a>
                                     @endif
                                 </div>
                             </div>
@@ -130,8 +130,8 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 13h6m-3-3v6m5 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                             </svg>
                         </div>
-                        <h3 class="empty-title">No files found</h3>
-                        <p class="empty-sub">We couldn't find any files matching your criteria.</p>
+                        <h3 class="empty-title">Tidak ada berkas</h3>
+                        <p class="empty-sub">Kami tidak dapat menemukan berkas yang sesuai dengan kriteria Anda.</p>
                     </div>
                 @endif
             </div>

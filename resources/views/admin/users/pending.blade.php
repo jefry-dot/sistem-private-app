@@ -1,47 +1,83 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Pending Client Approvals') }}
+            {{ __('Persetujuan Client Baru') }}
         </h2>
     </x-slot>
 
-    <div class="py-12">
+    <div class="py-6">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900">
-                    <p class="mb-4 text-sm text-gray-600">These users have registered themselves but cannot login until you approve them.</p>
+            
+            {{-- PAGE HEADER ──────────────────────────────── --}}
+            <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;margin-bottom:1.5rem;flex-wrap:wrap;">
+                <div>
+                    <h1 style="font-size:1.375rem;font-weight:700;letter-spacing:-0.03em;color:var(--text-primary);margin:0 0 0.25rem;">
+                        Menunggu Persetujuan
+                    </h1>
+                    <p style="font-size:0.8125rem;color:var(--text-tertiary);margin:0;">
+                        Klien-klien di bawah ini telah mendaftar mandiri dan membutuhkan verifikasi Anda sebelum dapat mengakses sistem.
+                    </p>
+                </div>
+                <a href="{{ route('admin.users.index') }}" class="btn-secondary">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/>
+                    </svg>
+                    Daftar Client
+                </a>
+            </div>
+
+            @if(session('success'))
+                <div class="alert-success mb-6">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                    {{ session('success') }}
+                </div>
+            @endif
+
+            <div class="card overflow-hidden">
+                <div class="p-6">
                     <div class="overflow-x-auto">
-                        <table class="min-w-full divide-y divide-gray-200">
-                            <thead class="bg-gray-50">
+                        <table class="data-table">
+                            <thead>
                                 <tr>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Client Name</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Registered At</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider text-right">Actions</th>
+                                    <th>Nama Klien</th>
+                                    <th>Email</th>
+                                    <th class="text-right">Waktu Pendaftaran</th>
+                                    <th class="text-right">Aksi</th>
                                 </tr>
                             </thead>
-                            <tbody class="bg-white divide-y divide-gray-200">
+                            <tbody>
                                 @forelse($users as $user)
                                     <tr>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ $user->name }}</td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $user->email }}</td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-xs">{{ $user->created_at->format('d M Y, H:i') }}</td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-right space-x-2">
-                                            <form action="{{ route('admin.users.approve', $user) }}" method="POST" class="inline-block">
-                                                @csrf
-                                                <button type="submit" class="text-green-600 hover:text-green-900 bg-green-100 px-4 py-1 rounded shadow-sm">Approve</button>
-                                            </form>
-                                            
-                                            <form action="{{ route('admin.users.destroy', $user) }}" method="POST" class="inline-block" onsubmit="return confirm('Reject and delete this registration?')">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="text-red-600 hover:text-red-900 bg-red-50 px-3 py-1 rounded">Reject</button>
-                                            </form>
+                                        <td>
+                                            <div class="flex items-center gap-3">
+                                                <div class="w-8 h-8 rounded-full bg-accent-light flex items-center justify-center text-accent font-bold text-[10px]">
+                                                    {{ strtoupper(substr($user->name, 0, 1)) }}
+                                                </div>
+                                                <span class="font-bold text-accent text-sm">{{ $user->name }}</span>
+                                            </div>
+                                        </td>
+                                        <td class="text-secondary text-sm">{{ $user->email }}</td>
+                                        <td class="text-right text-[10px] font-mono text-tertiary">{{ $user->created_at->format('d M Y, H:i') }}</td>
+                                        <td class="text-right">
+                                            <div class="flex justify-end gap-2">
+                                                <form action="{{ route('admin.users.approve', $user) }}" method="POST" class="inline-block">
+                                                    @csrf
+                                                    <button type="submit" class="text-accent hover:underline font-bold text-[11px] uppercase tracking-wider bg-accent-light px-3 py-1.5 rounded-lg border border-accent-muted">Setujui</button>
+                                                </form>
+                                                
+                                                <form action="{{ route('admin.users.destroy', $user) }}" method="POST" class="inline-block" onsubmit="return confirm('Tolak dan hapus pendaftaran ini?')">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="text-danger hover:underline font-bold text-[11px] uppercase tracking-wider px-3 py-1.5 rounded-lg">Tolak</button>
+                                                </form>
+                                            </div>
                                         </td>
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="4" class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">No pending approvals.</td>
+                                        <td colspan="4" class="text-center py-12 text-tertiary italic">Tidak ada pendaftaran yang menunggu persetujuan.</td>
                                     </tr>
                                 @endforelse
                             </tbody>

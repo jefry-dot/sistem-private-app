@@ -111,7 +111,7 @@ class FileController extends Controller
                 $file->groups()->attach($request->groups);
             }
 
-            ActivityLogger::log('upload_file', "Uploaded file: {$originalName}", $file);
+            ActivityLogger::log('upload_file', "Mengupload berkas: {$originalName}", $file);
 
             // Notifications logic
             try {
@@ -131,7 +131,7 @@ class FileController extends Controller
                 // Jangan batalkan upload jika hanya notifikasi yang gagal
             }
 
-            return back()->with('success', 'File berhasil diupload.');
+            return back()->with('success', 'Berkas berhasil diupload.');
 
         } catch (\Illuminate\Validation\ValidationException $e) {
             throw $e;
@@ -173,9 +173,9 @@ class FileController extends Controller
         $file->users()->sync($request->user_ids ?? []);
         $file->groups()->sync($request->group_ids ?? []);
 
-        ActivityLogger::log('update_file', "Updated metadata/access for file: {$file->original_name}", $file);
+        ActivityLogger::log('update_file', "Memperbarui metadata/akses berkas: {$file->original_name}", $file);
 
-        return redirect()->route('admin.file.index')->with('success', 'Perubahan file berhasil disimpan.');
+        return redirect()->route('admin.file.index')->with('success', 'Perubahan berkas berhasil disimpan.');
     }
 
     public function download(File $file, Request $request)
@@ -189,7 +189,7 @@ class FileController extends Controller
                     })->exists();
 
         if (!$hasAccess) {
-            abort(403, 'Unauthorized action.');
+            abort(403, 'Aksi tidak diizinkan.');
         }
 
         // Log the download
@@ -199,10 +199,10 @@ class FileController extends Controller
             'ip_address' => $request->ip(),
         ]);
 
-        ActivityLogger::log('download_file', "Downloaded file: {$file->original_name}", $file);
+        ActivityLogger::log('download_file', "Mengunduh berkas: {$file->original_name}", $file);
 
         if (!Storage::disk('private')->exists($file->file_path)) {
-            abort(404, 'File not found on storage.');
+            abort(404, 'Berkas tidak ditemukan di penyimpanan.');
         }
 
         return Storage::disk('private')->download($file->file_path, $file->original_name);
@@ -219,11 +219,11 @@ class FileController extends Controller
                     })->exists();
 
         if (!$hasAccess) {
-            abort(403, 'Unauthorized action.');
+            abort(403, 'Aksi tidak diizinkan.');
         }
 
         if (!Storage::disk('private')->exists($file->file_path)) {
-            abort(404, 'File not found.');
+            abort(404, 'Berkas tidak ditemukan.');
         }
 
         $path = Storage::disk('private')->path($file->file_path);
@@ -237,7 +237,7 @@ class FileController extends Controller
 
     public function destroy(File $file)
     {
-        ActivityLogger::log('delete_file', "Deleted file: {$file->original_name}", $file);
+        ActivityLogger::log('delete_file', "Menghapus berkas: {$file->original_name}", $file);
         
         if (Storage::disk('private')->exists($file->file_path)) {
             Storage::disk('private')->delete($file->file_path);
@@ -245,7 +245,7 @@ class FileController extends Controller
 
         $file->delete();
 
-        return back()->with('success', 'File deleted successfully.');
+        return back()->with('success', 'Berkas berhasil dihapus.');
     }
 
     public function manageAccess(File $file)
@@ -269,9 +269,9 @@ class FileController extends Controller
         $file->users()->sync($request->users ?? []);
         $file->groups()->sync($request->groups ?? []);
 
-        ActivityLogger::log('update_file_access', "Updated access for file: {$file->original_name}", $file);
+        ActivityLogger::log('update_file_access', "Memperbarui akses berkas: {$file->original_name}", $file);
 
-        return redirect()->route('admin.dashboard')->with('success', 'File access updated successfully.');
+        return redirect()->route('admin.dashboard')->with('success', 'Akses berkas berhasil diperbarui.');
     }
 
     public function bulkDestroy(Request $request)
@@ -290,8 +290,8 @@ class FileController extends Controller
             $file->delete();
         }
 
-        ActivityLogger::log('bulk_delete_files', "Deleted " . count($request->files) . " files.");
+        ActivityLogger::log('bulk_delete_files', "Menghapus " . count($request->files) . " berkas sekaligus.");
 
-        return back()->with('success', count($request->files) . ' file berhasil dihapus.');
+        return back()->with('success', count($request->files) . ' berkas berhasil dihapus.');
     }
 }

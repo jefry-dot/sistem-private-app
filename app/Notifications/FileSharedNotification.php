@@ -32,6 +32,6 @@ class FileSharedNotification extends Notification implements ShouldQueue
                     ->line('A new file has been securely shared with you.')
                     ->line('File Name: ' . $this->file->original_name)
                     ->action('View File', route('client.dashboard'))
-                    ->line('Thank you for using our application!');
+                    ->line('Thank you for using Mulia Grup Private System!');
     }
 }

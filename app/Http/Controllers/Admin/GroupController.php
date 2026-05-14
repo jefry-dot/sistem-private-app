@@ -36,9 +36,9 @@ class GroupController extends Controller
             $group->users()->sync($request->users);
         }
 
-        ActivityLogger::log('create_group', "Created group: {$group->name}", $group);
+        ActivityLogger::log('create_group', "Membuat grup: {$group->name}", $group);
 
-        return redirect()->route('admin.groups.index')->with('success', 'Group created successfully.');
+        return redirect()->route('admin.groups.index')->with('success', 'Grup berhasil dibuat.');
     }
 
     public function edit(Group $group)
@@ -60,16 +60,16 @@ class GroupController extends Controller
         $group->update($request->only('name', 'description'));
         $group->users()->sync($request->users ?? []);
 
-        ActivityLogger::log('update_group', "Updated group: {$group->name}", $group);
+        ActivityLogger::log('update_group', "Memperbarui grup: {$group->name}", $group);
 
-        return redirect()->route('admin.groups.index')->with('success', 'Group updated successfully.');
+        return redirect()->route('admin.groups.index')->with('success', 'Grup berhasil diperbarui.');
     }
 
     public function destroy(Group $group)
     {
-        ActivityLogger::log('delete_group', "Deleted group: {$group->name}", $group);
+        ActivityLogger::log('delete_group', "Menghapus grup: {$group->name}", $group);
         $group->delete();
 
-        return redirect()->route('admin.groups.index')->with('success', 'Group deleted successfully.');
+        return redirect()->route('admin.groups.index')->with('success', 'Grup berhasil dihapus.');
     }
 }

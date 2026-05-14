@@ -20,12 +20,12 @@
         @if ($paginator->onFirstPage())
             <span class="page-btn nav disabled">
                 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
-                Prev
+                Seb.
             </span>
         @else
             <a href="{{ $paginator->previousPageUrl() }}" class="page-btn nav" rel="prev">
                 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
-                Prev
+                Seb.
             </a>
         @endif
 
@@ -51,12 +51,12 @@
 
         @if ($paginator->hasMorePages())
             <a href="{{ $paginator->nextPageUrl() }}" class="page-btn nav" rel="next">
-                Next
+                Sel.
                 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
             </a>
         @else
             <span class="page-btn nav disabled">
-                Next
+                Sel.
                 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
             </span>
         @endif

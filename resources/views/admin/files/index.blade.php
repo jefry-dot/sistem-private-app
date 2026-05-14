@@ -548,7 +548,7 @@ tr:hover .row-actions { opacity: 1; }
                 <option value="{{ request()->fullUrlWithQuery(['sort' => 'oldest']) }}" {{ request('sort')==='oldest' ? 'selected' : '' }}>Terlama</option>
                 <option value="{{ request()->fullUrlWithQuery(['sort' => 'name']) }}"   {{ request('sort')==='name' ? 'selected' : '' }}>Nama A–Z</option>
                 <option value="{{ request()->fullUrlWithQuery(['sort' => 'size']) }}"   {{ request('sort')==='size' ? 'selected' : '' }}>Ukuran ↓</option>
-                <option value="{{ request()->fullUrlWithQuery(['sort' => 'downloads']) }}" {{ request('sort')==='downloads' ? 'selected' : '' }}>Terpopuler</option>
+                <option value="{{ request()->fullUrlWithQuery(['sort' => 'downloads']) }}" {{ request('sort')==='downloads' ? 'selected' : '' }}>Populer</option>
             </select>
         </div>
     </div>
@@ -557,13 +557,13 @@ tr:hover .row-actions { opacity: 1; }
     <form id="bulkForm" action="{{ route('bulk-download') }}" method="POST">
         @csrf
         <div class="bulk-bar" id="bulkBar">
-            <span class="bulk-count"><span id="bulkCount">0</span> file dipilih</span>
+            <span class="bulk-count"><span id="bulkCount">0</span> berkas dipilih</span>
             <div class="bulk-actions">
                 <button type="submit" class="bulk-btn bulk-btn-download">
                     <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a2 2 0 002 2h12a2 2 0 002-2v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
                     </svg>
-                    Download
+                    Unduh
                 </button>
                 <button type="button" class="bulk-btn bulk-btn-delete" onclick="confirmBulkDelete()">
                     <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
@@ -588,14 +588,14 @@ tr:hover .row-actions { opacity: 1; }
                                     style="width:15px;height:15px;border-radius:4px;accent-color:var(--accent);cursor:pointer;">
                             </th>
                             <th class="sortable" onclick="sortBy('name')">
-                                Nama File
+                                Nama Berkas
                                 <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" style="display:inline;margin-left:3px;vertical-align:middle;">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4"/>
                                 </svg>
                             </th>
                             <th>Kategori</th>
                             <th class="sortable" style="text-align:right;" onclick="sortBy('size')">Ukuran</th>
-                            <th class="sortable" style="text-align:right;" onclick="sortBy('downloads')">Download</th>
+                            <th class="sortable" style="text-align:right;" onclick="sortBy('downloads')">Unduhan</th>
                             <th class="sortable" style="text-align:right;" onclick="sortBy('newest')">Tanggal</th>
                             <th style="text-align:right;">Aksi</th>
                         </tr>
@@ -656,19 +656,19 @@ tr:hover .row-actions { opacity: 1; }
                             <td>
                                 <div class="row-actions">
                                     {{-- Download --}}
-                                    <a href="{{ route('file.download', $file) }}" target="_blank" class="row-btn" title="Download">
+                                    <a href="{{ route('file.download', $file) }}" target="_blank" class="row-btn" title="Unduh">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a2 2 0 002 2h12a2 2 0 002-2v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
                                         </svg>
                                     </a>
                                     {{-- Access --}}
-                                    <a href="{{ route('admin.file.access', $file) }}" class="row-btn" title="Manage Access">
+                                    <a href="{{ route('admin.file.access', $file) }}" class="row-btn" title="Kelola Akses">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
                                         </svg>
                                     </a>
                                     {{-- Delete --}}
-                                    <form action="{{ route('admin.file.destroy', $file) }}" method="POST" onsubmit="return confirm('Hapus file ini?')" style="display:inline;">
+                                    <form action="{{ route('admin.file.destroy', $file) }}" method="POST" onsubmit="return confirm('Hapus berkas ini?')" style="display:inline;">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="row-btn danger" title="Hapus">
@@ -735,11 +735,11 @@ tr:hover .row-actions { opacity: 1; }
                             <span class="mobile-dot"></span>
                             <span>{{ $file->created_at->format('d M Y') }}</span>
                             <span class="mobile-dot"></span>
-                            <span>{{ $file->download_logs_count ?? 0 }}× dl</span>
+                            <span>{{ $file->download_logs_count ?? 0 }}× unduhan</span>
                         </div>
                     </div>
                     <div style="display:flex;gap:0.375rem;flex-shrink:0;">
-                        <a href="{{ route('admin.file.access', $file) }}" class="row-btn" title="Manage Access">
+                        <a href="{{ route('admin.file.access', $file) }}" class="row-btn" title="Kelola Akses">
                             <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
                             </svg>

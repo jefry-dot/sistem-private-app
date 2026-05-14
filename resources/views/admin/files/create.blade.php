@@ -198,7 +198,7 @@
         <div>
             <div class="section-label mb-2">Manajemen File</div>
             <h1 style="font-size:1.75rem; font-weight:800; letter-spacing:-0.04em; color:var(--accent);">Upload Dokumen</h1>
-            <p style="font-size:0.875rem; color:var(--text-secondary);">Bagikan file secara aman ke klien Mulia Group.</p>
+            <p style="font-size:0.875rem; color:var(--text-secondary);">Bagikan file secara aman ke klien Mulia Grup.</p>
         </div>
         <a href="{{ route('admin.dashboard') }}" class="btn-secondary">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>

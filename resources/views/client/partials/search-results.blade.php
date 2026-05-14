@@ -37,11 +37,11 @@
 
                 <div class="flex-1 min-w-0">
                     <div class="google-file-path">
-                        <span>My Files</span>
+                        <span>Berkas Saya</span>
                         <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
                             <path d="M9 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
-                        <span>{{ $file->category->name ?? 'Uncategorized' }}</span>
+                        <span>{{ $file->category->name ?? 'Tanpa Kategori' }}</span>
                     </div>
                     
                     <a href="{{ route('file.view', $file) }}" class="google-file-title" target="_blank">
@@ -56,7 +56,7 @@
                         @if(!empty($query) && $query !== '*' && $file->description)
                             {!! preg_replace('/(' . preg_quote(e($query), '/') . ')/iu', '<mark style="background:rgba(79,70,229,0.12);color:var(--accent);border-radius:3px;padding:0 2px;">$1</mark>', e($file->description)) !!}
                         @else
-                            {{ $file->description ?: 'No description available for this file. You can download or view the file using the links below.' }}
+                            {{ $file->description ?: 'Tidak ada deskripsi tersedia untuk file ini. Anda dapat mengunduh atau melihat file menggunakan tautan di bawah.' }}
                         @endif
                     </div>
 
@@ -69,9 +69,9 @@
                     </div>
 
                     <div class="google-file-actions">
-                        <a href="{{ route('file.download', $file) }}" class="google-action-link">Download File</a>
-                        @if(strtolower($file->extension) === 'pdf')
-                            <a href="{{ route('file.view', $file) }}" target="_blank" class="google-action-link">Quick View</a>
+                        <a href="{{ route('file.download', $file) }}" class="google-action-link">Unduh File</a>
+                        @if(strtolower($file->extension) === 'pdf' || in_array(strtolower($file->extension), ['jpg', 'jpeg', 'png', 'webp']))
+                            <a href="{{ route('file.view', $file) }}" target="_blank" class="google-action-link">Lihat Cepat</a>
                         @endif
                     </div>
                 </div>

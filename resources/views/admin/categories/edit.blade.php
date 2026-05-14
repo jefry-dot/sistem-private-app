@@ -5,24 +5,44 @@
         </h2>
     </x-slot>
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900">
+    <div class="py-6">
+        <div class="max-w-2xl mx-auto sm:px-6 lg:px-8">
+            
+            {{-- PAGE HEADER ──────────────────────────────── --}}
+            <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;margin-bottom:1.5rem;flex-wrap:wrap;">
+                <div>
+                    <h1 style="font-size:1.375rem;font-weight:700;letter-spacing:-0.03em;color:var(--text-primary);margin:0 0 0.25rem;">
+                        Edit Kategori: {{ $category->name }}
+                    </h1>
+                    <p style="font-size:0.8125rem;color:var(--text-tertiary);margin:0;">
+                        Perbarui nama kategori untuk pengelompokan file yang lebih baik.
+                    </p>
+                </div>
+                <a href="{{ route('admin.categories.index') }}" class="btn-secondary">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/>
+                    </svg>
+                    Batal
+                </a>
+            </div>
+
+            <div class="card overflow-hidden">
+                <div class="p-8">
                     <form method="POST" action="{{ route('admin.categories.update', $category) }}">
                         @csrf
                         @method('PUT')
                         <div class="space-y-6">
                             <div>
-                                <x-input-label for="name" value="Category Name" />
-                                <x-text-input id="name" name="name" type="text" class="mt-1 block w-full" :value="$category->name" required autofocus />
+                                <label class="section-label mb-2">Nama Kategori</label>
+                                <input type="text" name="name" value="{{ $category->name }}" required class="block w-full" style="background: var(--bg-surface); color: var(--text-primary); border: 1px solid var(--border-subtle); padding: 0.75rem 1rem; border-radius: 12px; outline: none; transition: border-color 0.2s;" placeholder="Misal: Laporan Keuangan, Kontrak Kerja, Dokumentasi Proyek..." autofocus>
                                 <x-input-error class="mt-2" :messages="$errors->get('name')" />
                             </div>
                         </div>
 
-                        <div class="mt-8 flex items-center justify-end">
-                            <a href="{{ route('admin.categories.index') }}" class="mr-4 text-sm text-gray-600 hover:text-gray-900">Cancel</a>
-                            <x-primary-button>Update Category</x-primary-button>
+                        <div class="mt-10 pt-8 border-t border-subtle flex justify-end">
+                            <button type="submit" class="btn-primary !px-10 !py-3 !text-sm !rounded-xl shadow-lg">
+                                Simpan Perubahan
+                            </button>
                         </div>
                     </form>
                 </div>

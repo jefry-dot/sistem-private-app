@@ -32,9 +32,9 @@ class CategoryController extends Controller
             'slug' => Str::slug($request->name),
         ]);
 
-        ActivityLogger::log('create_category', "Created category: {$category->name}", $category);
+        ActivityLogger::log('create_category', "Membuat kategori: {$category->name}", $category);
 
-        return redirect()->route('admin.categories.index')->with('success', 'Category created successfully.');
+        return redirect()->route('admin.categories.index')->with('success', 'Kategori berhasil dibuat.');
     }
 
     public function edit(Category $category)
@@ -53,16 +53,16 @@ class CategoryController extends Controller
             'slug' => Str::slug($request->name),
         ]);
 
-        ActivityLogger::log('update_category', "Updated category: {$category->name}", $category);
+        ActivityLogger::log('update_category', "Memperbarui kategori: {$category->name}", $category);
 
-        return redirect()->route('admin.categories.index')->with('success', 'Category updated successfully.');
+        return redirect()->route('admin.categories.index')->with('success', 'Kategori berhasil diperbarui.');
     }
 
     public function destroy(Category $category)
     {
-        ActivityLogger::log('delete_category', "Deleted category: {$category->name}", $category);
+        ActivityLogger::log('delete_category', "Menghapus kategori: {$category->name}", $category);
         $category->delete();
 
-        return redirect()->route('admin.categories.index')->with('success', 'Category deleted successfully.');
+        return redirect()->route('admin.categories.index')->with('success', 'Kategori berhasil dihapus.');
     }
 }

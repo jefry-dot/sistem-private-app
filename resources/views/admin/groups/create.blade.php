@@ -1,36 +1,58 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Create New Group') }}
+            {{ __('Buat Grup Baru') }}
         </h2>
     </x-slot>
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900">
+    <div class="py-6">
+        <div class="max-w-3xl mx-auto sm:px-6 lg:px-8">
+            
+            {{-- PAGE HEADER ──────────────────────────────── --}}
+            <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;margin-bottom:1.5rem;flex-wrap:wrap;">
+                <div>
+                    <h1 style="font-size:1.375rem;font-weight:700;letter-spacing:-0.03em;color:var(--text-primary);margin:0 0 0.25rem;">
+                        Buat Grup Baru
+                    </h1>
+                    <p style="font-size:0.8125rem;color:var(--text-tertiary);margin:0;">
+                        Definisikan grup baru dan tentukan client mana saja yang menjadi anggotanya.
+                    </p>
+                </div>
+                <a href="{{ route('admin.groups.index') }}" class="btn-secondary">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/>
+                    </svg>
+                    Batal
+                </a>
+            </div>
+
+            <div class="card overflow-hidden">
+                <div class="p-8">
                     <form method="POST" action="{{ route('admin.groups.store') }}">
                         @csrf
                         <div class="space-y-6">
                             <div>
-                                <x-input-label for="name" value="Group Name" />
-                                <x-text-input id="name" name="name" type="text" class="mt-1 block w-full" required autofocus />
+                                <label class="section-label mb-2">Nama Grup</label>
+                                <input type="text" name="name" required class="block w-full" style="background: var(--bg-surface); color: var(--text-primary); border: 1px solid var(--border-subtle); padding: 0.75rem 1rem; border-radius: 12px; outline: none; transition: border-color 0.2s;" placeholder="Misal: Departemen Keuangan, Client VIP..." autofocus>
                                 <x-input-error class="mt-2" :messages="$errors->get('name')" />
                             </div>
 
                             <div>
-                                <x-input-label for="description" value="Description" />
-                                <textarea id="description" name="description" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500" rows="3"></textarea>
+                                <label class="section-label mb-2">Deskripsi (Opsional)</label>
+                                <textarea name="description" class="block w-full" style="background: var(--bg-surface); color: var(--text-primary); border: 1px solid var(--border-subtle); padding: 0.75rem 1rem; border-radius: 12px; outline: none; min-height: 100px;" placeholder="Penjelasan singkat mengenai grup ini..."></textarea>
                                 <x-input-error class="mt-2" :messages="$errors->get('description')" />
                             </div>
 
                             <div>
-                                <x-input-label value="Select Clients for this Group" />
-                                <div class="mt-2 grid grid-cols-1 md:grid-cols-3 gap-2 max-h-60 overflow-y-auto border border-gray-200 p-4 rounded-md bg-gray-50">
+                                <label class="section-label mb-4">Pilih Anggota Grup</label>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-3 max-h-64 overflow-y-auto p-4 bg-elevated rounded-2xl border border-subtle" style="background: var(--bg-elevated); border: 1px solid var(--border-subtle);">
                                     @foreach($users as $user)
-                                        <label class="inline-flex items-center">
-                                            <input type="checkbox" name="users[]" value="{{ $user->id }}" class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500">
-                                            <span class="ml-2 text-sm text-gray-600">{{ $user->name }} ({{ $user->email }})</span>
+                                        <label class="flex items-center gap-3 p-3 bg-surface rounded-xl border border-subtle cursor-pointer hover:border-accent transition-all">
+                                            <input type="checkbox" name="users[]" value="{{ $user->id }}" class="w-4 h-4 rounded border-gray-300 text-accent focus:ring-accent accent-accent">
+                                            <div class="flex flex-col">
+                                                <span class="text-sm font-bold text-primary" style="color: var(--text-primary);">{{ $user->name }}</span>
+                                                <span class="text-[10px] text-tertiary" style="color: var(--text-tertiary);">{{ $user->email }}</span>
+                                            </div>
                                         </label>
                                     @endforeach
                                 </div>
@@ -38,9 +60,10 @@
                             </div>
                         </div>
 
-                        <div class="mt-8 flex items-center justify-end">
-                            <a href="{{ route('admin.groups.index') }}" class="mr-4 text-sm text-gray-600 hover:text-gray-900">Cancel</a>
-                            <x-primary-button>Create Group</x-primary-button>
+                        <div class="mt-10 pt-8 border-t border-subtle flex justify-end">
+                            <button type="submit" class="btn-primary !px-10 !py-3 !text-sm !rounded-xl shadow-lg">
+                                Simpan Grup
+                            </button>
                         </div>
                     </form>
                 </div>

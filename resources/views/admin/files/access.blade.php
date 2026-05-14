@@ -1,33 +1,47 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Manage Access for: ') }} {{ $file->original_name }}
+            {{ __('Kelola Akses File') }}
         </h2>
     </x-slot>
 
-    <div class="py-12">
+    <div class="py-6">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900">
+            
+            {{-- PAGE HEADER ──────────────────────────────── --}}
+            <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;margin-bottom:1.5rem;flex-wrap:wrap;">
+                <div>
+                    <h1 style="font-size:1.375rem;font-weight:700;letter-spacing:-0.03em;color:var(--text-primary);margin:0 0 0.25rem;">
+                        Akses File: {{ $file->original_name }}
+                    </h1>
+                    <p style="font-size:0.8125rem;color:var(--text-tertiary);margin:0;">
+                        Tentukan siapa saja yang berhak melihat dan mengunduh dokumen ini.
+                    </p>
+                </div>
+                <a href="{{ route('admin.file.index') }}" class="btn-secondary">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/>
+                    </svg>
+                    Kembali
+                </a>
+            </div>
+
+            <div class="card overflow-hidden">
+                <div class="p-8">
                     <form method="POST" action="{{ route('admin.file.access.update', $file) }}">
                         @csrf
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
                             <!-- Select Clients -->
                             <div>
-                                <h4 class="font-bold text-gray-700 mb-4 flex items-center">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
-                                    </svg>
-                                    Share with Clients
-                                </h4>
-                                <div class="space-y-2 max-h-80 overflow-y-auto border border-gray-200 p-4 rounded-md bg-gray-50">
+                                <p class="section-label mb-4">Berikan Akses ke Client</p>
+                                <div class="grid grid-cols-1 gap-3 max-h-96 overflow-y-auto p-4 bg-elevated rounded-2xl border border-subtle" style="background: var(--bg-elevated); border: 1px solid var(--border-subtle);">
                                     @foreach($clients as $client)
-                                        <label class="flex items-center p-2 hover:bg-white rounded transition cursor-pointer">
-                                            <input type="checkbox" name="users[]" value="{{ $client->id }}" class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500"
+                                        <label class="flex items-center gap-3 p-3 bg-surface rounded-xl border border-subtle cursor-pointer hover:border-accent transition-all">
+                                            <input type="checkbox" name="users[]" value="{{ $client->id }}" class="w-4 h-4 rounded border-gray-300 text-accent focus:ring-accent accent-accent"
                                                 @if($file->users->contains($client->id)) checked @endif>
-                                            <div class="ml-3">
-                                                <div class="text-sm font-medium text-gray-900">{{ $client->name }}</div>
-                                                <div class="text-xs text-gray-500">{{ $client->email }}</div>
+                                            <div class="flex flex-col">
+                                                <span class="text-sm font-bold text-primary" style="color: var(--text-primary);">{{ $client->name }}</span>
+                                                <span class="text-[10px] text-tertiary" style="color: var(--text-tertiary);">{{ $client->email }}</span>
                                             </div>
                                         </label>
                                     @endforeach
@@ -36,20 +50,15 @@
 
                             <!-- Select Groups -->
                             <div>
-                                <h4 class="font-bold text-gray-700 mb-4 flex items-center">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-purple-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                                    </svg>
-                                    Share with Groups
-                                </h4>
-                                <div class="space-y-2 max-h-80 overflow-y-auto border border-gray-200 p-4 rounded-md bg-gray-50">
+                                <p class="section-label mb-4">Berikan Akses ke Grup</p>
+                                <div class="grid grid-cols-1 gap-3 max-h-96 overflow-y-auto p-4 bg-elevated rounded-2xl border border-subtle" style="background: var(--bg-elevated); border: 1px solid var(--border-subtle);">
                                     @foreach($groups as $group)
-                                        <label class="flex items-center p-2 hover:bg-white rounded transition cursor-pointer">
-                                            <input type="checkbox" name="groups[]" value="{{ $group->id }}" class="rounded border-gray-300 text-purple-600 shadow-sm focus:ring-purple-500"
+                                        <label class="flex items-center gap-3 p-3 bg-surface rounded-xl border border-subtle cursor-pointer hover:border-accent transition-all">
+                                            <input type="checkbox" name="groups[]" value="{{ $group->id }}" class="w-4 h-4 rounded border-gray-300 text-purple-600 focus:ring-purple-500 accent-purple-600"
                                                 @if($file->groups->contains($group->id)) checked @endif>
-                                            <div class="ml-3">
-                                                <div class="text-sm font-medium text-gray-900">{{ $group->name }}</div>
-                                                <div class="text-xs text-gray-500">{{ $group->users_count }} members</div>
+                                            <div class="flex flex-col">
+                                                <span class="text-sm font-bold text-primary" style="color: var(--text-primary);">{{ $group->name }}</span>
+                                                <span class="text-[10px] text-tertiary" style="color: var(--text-tertiary);">{{ $group->users_count ?? $group->users->count() }} Client Terdaftar</span>
                                             </div>
                                         </label>
                                     @endforeach
@@ -57,9 +66,10 @@
                             </div>
                         </div>
 
-                        <div class="mt-8 flex items-center justify-end space-x-4 border-t pt-6">
-                            <a href="{{ route('admin.dashboard') }}" class="text-sm text-gray-600 hover:text-gray-900 font-medium">Cancel and Go Back</a>
-                            <x-primary-button>Update Access Permissions</x-primary-button>
+                        <div class="mt-10 pt-8 border-t border-subtle flex justify-end">
+                            <button type="submit" class="btn-primary !px-10 !py-3 !text-sm !rounded-xl shadow-lg">
+                                Perbarui Hak Akses
+                            </button>
                         </div>
                     </form>
                 </div>
