@@ -4,7 +4,10 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>{{ config('app.name', 'Mulia Grup') }}</title>
+        <title>{{ get_setting('site_name', config('app.name', 'Mulia Grup')) }}</title>
+
+        <!-- Favicon -->
+        <link rel="icon" type="image/png" href="{{ asset('logo-2.png') }}?v=2">
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
@@ -55,9 +58,9 @@
     </head>
     <body class="bg-[#FDFDFC] dark:bg-[#0a0a0a] text-[#1b1b18] flex p-6 lg:p-8 items-center lg:justify-center min-h-screen flex-col">
         <div class="max-w-md w-full bg-white dark:bg-[#161615] p-8 rounded-2xl shadow-xl border border-gray-100 dark:border-[#2a2a2a] text-center">
-            <img src="/logo-2.png" alt="Mulia Grup Logo" class="mx-auto h-20 mb-8">
+            <img src="{{ get_setting('site_logo', '/logo-2.png') }}" alt="{{ get_setting('site_name', 'Mulia Grup') }} Logo" class="mx-auto h-20 mb-8">
             
-            <h1 class="text-3xl font-bold mb-4 dark:text-white">Mulia Grup</h1>
+            <h1 class="text-3xl font-bold mb-4 dark:text-white">{{ get_setting('site_name', 'Mulia Grup') }}</h1>
             <h2 class="text-xl font-semibold mb-6 text-gray-600 dark:text-gray-400 tracking-tight">Sistem Manajemen Privat</h2>
             
             <p class="text-gray-500 dark:text-gray-400 mb-10 leading-relaxed">

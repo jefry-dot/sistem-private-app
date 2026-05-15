@@ -124,14 +124,14 @@
 
         {{-- Groups --}}
         <div class="stat-card-ps bg-red-ps">
-            <span class="value">2</span>
+            <span class="value">{{ number_format($stats['total_groups']) }}</span>
             <span class="label">Grup</span>
             <svg class="icon-bg" fill="currentColor" viewBox="0 0 24 24"><path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
         </div>
 
         {{-- System Users --}}
         <div class="stat-card-ps bg-cyan-ps">
-            <span class="value">1</span>
+            <span class="value">{{ number_format($stats['total_staff']) }}</span>
             <span class="label">Staf Sistem</span>
             <svg class="icon-bg" fill="currentColor" viewBox="0 0 24 24"><path d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
         </div>
@@ -142,16 +142,15 @@
         <div class="lg:col-span-2">
             <div class="bg-white border border-strong rounded-sm p-4 sm:p-6">
                 <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-6 gap-4">
-                    <h3 class="text-sm font-bold text-gray-600 uppercase tracking-widest">Statistik</h3>
+                    <h3 id="chartTitle" class="text-sm font-bold text-gray-600 uppercase tracking-widest">Tren Unduhan</h3>
                     <div class="flex flex-wrap gap-2">
-                        <button class="tab-btn active text-[10px] sm:text-xs">15 hari</button>
-                        <button class="tab-btn text-[10px] sm:text-xs">30 hari</button>
-                        <button class="tab-btn text-[10px] sm:text-xs">60 hari</button>
+                        <button onclick="updateChart('downloads')" id="btn-downloads" class="tab-btn active text-[10px] sm:text-xs">Unduhan</button>
+                        <button onclick="updateChart('views')" id="btn-views" class="tab-btn text-[10px] sm:text-xs">Lihat Berkas</button>
                     </div>
                 </div>
 
                 <div style="height:340px;position:relative;" class="w-full">
-                    <canvas id="downloadChart"></canvas>
+                    <canvas id="activityChart"></canvas>
                 </div>
             </div>
 
@@ -179,6 +178,14 @@
                                 <td class="py-1 font-bold">Mulia Grup Private System</td>
                             </tr>
                             <tr>
+                                <td class="py-1 text-right pr-4">Total Ukuran File</td>
+                                <td class="py-1 font-bold">{{ round($stats['total_size'] / 1024 / 1024, 2) }} MB</td>
+                            </tr>
+                            <tr>
+                                <td class="py-1 text-right pr-4">Total Dilihat</td>
+                                <td class="py-1 font-bold">{{ number_format($stats['total_views']) }} kali</td>
+                            </tr>
+                            <tr>
                                 <td class="py-1 text-right pr-4">Ukuran Upload Maks</td>
                                 <td class="py-1 font-bold">50 MB</td>
                             </tr>
@@ -196,17 +203,17 @@
                 </div>
                 <div class="p-4 border-b border-strong">
                     <select class="w-full text-sm border-strong rounded-sm py-1.5 focus:border-ps-purple outline-none">
-                        <option>Sistem telah diperbarui</option>
+                        <option>Semua Aktivitas</option>
                     </select>
                 </div>
                 <div class="flex flex-col">
                     @forelse($recentActivities as $activity)
                     <div class="activity-list-item">
                         <span class="activity-date">{{ $activity->created_at->format('d/m/Y') }}</span>
-                        <svg class="activity-icon" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                        </svg>
-                        <span class="activity-text">{{ $activity->description }}</span>
+                        <div class="flex flex-col min-w-0">
+                            <span class="activity-text font-bold text-ps-purple">{{ $activity->user->name ?? 'System' }}</span>
+                            <span class="activity-text truncate">{{ $activity->description }}</span>
+                        </div>
                     </div>
                     @empty
                     <div class="p-6 text-center text-xs text-gray-400">
@@ -224,60 +231,71 @@
     @push('scripts')
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const ctx = document.getElementById('downloadChart').getContext('2d');
+        let activityChart;
+        const chartData = {
+            labels: {!! json_encode($chartData['labels']) !!},
+            downloads: {!! json_encode($chartData['downloads']) !!},
+            views: {!! json_encode($chartData['views']) !!}
+        };
 
-            new Chart(ctx, {
+        function initChart() {
+            const ctx = document.getElementById('activityChart').getContext('2d');
+            activityChart = new Chart(ctx, {
                 type: 'line',
                 data: {
-                    labels: {!! json_encode($chartData['labels']) !!},
-                    datasets: [
-                        {
-                            label: 'Upload oleh staf',
-                            data: {!! json_encode($chartData['data']) !!},
-                            borderColor: '#0288d1',
-                            borderWidth: 2,
-                            fill: false,
-                            tension: 0,
-                            pointRadius: 3
-                        },
-                        {
-                            label: 'Upload oleh klien',
-                            data: [0,0,0,0,0,0,0,0,1,7,0],
-                            borderColor: '#7cb342',
-                            borderWidth: 2,
-                            fill: false,
-                            tension: 0,
-                            pointRadius: 3
-                        }
-                    ]
+                    labels: chartData.labels,
+                    datasets: [{
+                        label: 'Unduhan',
+                        data: chartData.downloads,
+                        borderColor: '#27ae60',
+                        backgroundColor: 'rgba(39, 174, 96, 0.1)',
+                        borderWidth: 3,
+                        fill: true,
+                        tension: 0.4,
+                        pointRadius: 4,
+                        pointBackgroundColor: '#27ae60'
+                    }]
                 },
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
                     plugins: {
-                        legend: { 
-                            position: 'top',
-                            align: 'start',
-                            labels: {
-                                boxWidth: 30,
-                                padding: 20,
-                                font: { size: 10 }
-                            }
-                        }
+                        legend: { display: false }
                     },
                     scales: {
                         y: {
                             beginAtZero: true,
-                            ticks: { stepSize: 1 }
+                            ticks: { stepSize: 1, font: { size: 11 } },
+                            grid: { color: 'rgba(0,0,0,0.05)' }
                         },
                         x: {
-                            grid: { display: true }
+                            grid: { display: false },
+                            ticks: { font: { size: 11 } }
                         }
                     }
                 }
             });
-        });
+        }
+
+        function updateChart(type) {
+            // Update Title
+            document.getElementById('chartTitle').innerText = type === 'downloads' ? 'Tren Unduhan' : 'Tren Lihat Berkas';
+            
+            // Update Buttons
+            document.getElementById('btn-downloads').classList.toggle('active', type === 'downloads');
+            document.getElementById('btn-views').classList.toggle('active', type === 'views');
+
+            // Update Data
+            activityChart.data.datasets[0].label = type === 'downloads' ? 'Unduhan' : 'Lihat Berkas';
+            activityChart.data.datasets[0].data = type === 'downloads' ? chartData.downloads : chartData.views;
+            activityChart.data.datasets[0].borderColor = type === 'downloads' ? '#27ae60' : '#3498db';
+            activityChart.data.datasets[0].backgroundColor = type === 'downloads' ? 'rgba(39, 174, 96, 0.1)' : 'rgba(52, 152, 219, 0.1)';
+            activityChart.data.datasets[0].pointBackgroundColor = type === 'downloads' ? '#27ae60' : '#3498db';
+            
+            activityChart.update();
+        }
+
+        document.addEventListener('DOMContentLoaded', initChart);
     </script>
     @endpush
 </x-app-layout>

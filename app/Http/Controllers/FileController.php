@@ -64,14 +64,17 @@ class FileController extends Controller
     {
         try {
             $request->validate([
-                'file' => 'required|file|max:51200', // Max 50MB
+                'file' => 'required|file|max:51200|mimes:pdf,doc,docx,xls,xlsx,ppt,pptx,jpg,jpeg,png,webp,zip,rar,txt', // Max 50MB
                 'display_name' => 'nullable|string|max:255',
                 'description' => 'nullable|string',
-                'users' => 'nullable|array',
-                'users.*' => 'exists:users,id',
+                'category_id' => 'required|exists:categories,id',
                 'groups' => 'nullable|array',
                 'groups.*' => 'exists:groups,id',
                 'expires_at' => 'nullable|date|after:today',
+            ], [
+                'file.mimes' => 'Jenis file ini dilarang karena alasan keamanan.',
+                'file.max' => 'Ukuran file tidak boleh lebih dari 50MB.',
+                'category_id.required' => 'Pilih kategori file.',
             ]);
 
             $uploadedFile = $request->file('file');
@@ -87,7 +90,7 @@ class FileController extends Controller
             $path = $uploadedFile->store('files', 'private');
 
             if (!$path) {
-                return back()->withErrors(['file' => 'Gagal menyimpan file ke disk. Periksa izin folder storage.']);
+                return back()->withErrors(['file' => 'Gagal menyimpan file ke disk.']);
             }
 
             $file = File::create([
@@ -99,27 +102,18 @@ class FileController extends Controller
                 'size' => $size,
                 'visibility' => 'private',
                 'uploaded_by' => auth()->id(),
-                'category_id' => null,
+                'category_id' => $request->category_id,
                 'expires_at' => $request->expires_at,
             ]);
-
-            if ($request->has('users')) {
-                $file->users()->attach($request->users);
-            }
 
             if ($request->has('groups')) {
                 $file->groups()->attach($request->groups);
             }
 
-            ActivityLogger::log('upload_file', "Mengupload berkas: {$originalName}", $file);
+            ActivityLogger::log('upload_file', "Mengupload berkas: {$originalName} (Kategori: {$file->category->name})", $file);
 
             // Notifications logic
             try {
-                if ($request->has('users')) {
-                    $notifiableUsers = User::whereIn('id', $request->users)->get();
-                    Notification::send($notifiableUsers, new FileSharedNotification($file));
-                }
-
                 if ($request->has('groups')) {
                     $groupUsers = User::whereHas('groups', function($q) use ($request) {
                         $q->whereIn('groups.id', $request->groups);
@@ -128,7 +122,6 @@ class FileController extends Controller
                 }
             } catch (\Exception $e) {
                 \Log::warning("Gagal mengirim notifikasi: " . $e->getMessage());
-                // Jangan batalkan upload jika hanya notifikasi yang gagal
             }
 
             return back()->with('success', 'Berkas berhasil diupload.');
@@ -225,6 +218,8 @@ class FileController extends Controller
         if (!Storage::disk('private')->exists($file->file_path)) {
             abort(404, 'Berkas tidak ditemukan.');
         }
+
+        ActivityLogger::log('view_file', "Melihat berkas: {$file->original_name}", $file);
 
         $path = Storage::disk('private')->path($file->file_path);
         $mimeType = Storage::disk('private')->mimeType($file->file_path);

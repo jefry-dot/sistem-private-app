@@ -554,29 +554,33 @@ tr:hover .row-actions { opacity: 1; }
     </div>
 
     {{-- ── BULK ACTION BAR ────────────────────────────── --}}
-    <form id="bulkForm" action="{{ route('bulk-download') }}" method="POST">
-        @csrf
-        <div class="bulk-bar" id="bulkBar">
-            <span class="bulk-count"><span id="bulkCount">0</span> berkas dipilih</span>
-            <div class="bulk-actions">
-                <button type="submit" class="bulk-btn bulk-btn-download">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a2 2 0 002 2h12a2 2 0 002-2v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
-                    </svg>
-                    Unduh
-                </button>
-                <button type="button" class="bulk-btn bulk-btn-delete" onclick="confirmBulkDelete()">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
-                    </svg>
-                    Hapus
-                </button>
-            </div>
-            <button type="button" class="bulk-clear" onclick="clearSelection()">✕ Batal pilih</button>
+    <div class="bulk-bar" id="bulkBar">
+        <span class="bulk-count"><span id="bulkCount">0</span> berkas dipilih</span>
+        <div class="bulk-actions">
+            <button type="button" class="bulk-btn bulk-btn-download" onclick="submitBulkDownload()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a2 2 0 002 2h12a2 2 0 002-2v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+                </svg>
+                Unduh
+            </button>
+            <button type="button" class="bulk-btn bulk-btn-delete" onclick="confirmBulkDelete()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                </svg>
+                Hapus
+            </button>
         </div>
+        <button type="button" class="bulk-clear" onclick="clearSelection()">✕ Batal pilih</button>
+    </div>
 
-        {{-- ── MAIN CARD ────────────────────────────────── --}}
-        <div class="card" style="overflow:hidden;">
+    {{-- Hidden form for bulk actions --}}
+    <form id="hiddenBulkForm" method="POST" style="display:none;">
+        @csrf
+        <div id="hiddenBulkInputs"></div>
+    </form>
+
+    {{-- ── MAIN CARD ────────────────────────────────── --}}
+    <div class="card" style="overflow:hidden;">
 
             {{-- ── DESKTOP TABLE ──────────────────────────── --}}
             <div class="file-table-wrap">
@@ -776,7 +780,6 @@ tr:hover .row-actions { opacity: 1; }
             @endif
 
         </div>
-    </form>
 </div>
 
 <script>
@@ -823,20 +826,54 @@ tr:hover .row-actions { opacity: 1; }
         syncBulkUI();
     }
 
+    function submitBulkDownload() {
+        const checked = getChecked();
+        if (!checked.length) return;
+        
+        const form = document.getElementById('hiddenBulkForm');
+        const container = document.getElementById('hiddenBulkInputs');
+        container.innerHTML = '';
+        
+        form.action = "{{ route('bulk-download') }}";
+        
+        checked.forEach(cb => {
+            const input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = 'files[]';
+            input.value = cb.value;
+            container.appendChild(input);
+        });
+        
+        form.submit();
+    }
+
     function confirmBulkDelete() {
-        const n = getChecked().length;
+        const checked = getChecked();
+        const n = checked.length;
         if (!n) return;
+        
         if (confirm(`Hapus ${n} file terpilih? Tindakan ini tidak bisa dibatalkan.`)) {
-            const form = document.getElementById('bulkForm');
-            // Tambahkan input method DELETE secara dinamis
+            const form = document.getElementById('hiddenBulkForm');
+            const container = document.getElementById('hiddenBulkInputs');
+            container.innerHTML = '';
+            
+            form.action = "{{ route('admin.file.bulk-destroy') }}";
+            
+            // Add _method DELETE
             const methodInput = document.createElement('input');
             methodInput.type = 'hidden';
             methodInput.name = '_method';
             methodInput.value = 'DELETE';
-            form.appendChild(methodInput);
+            container.appendChild(methodInput);
             
-            // Ubah action ke route bulk destroy
-            form.action = "{{ route('admin.file.bulk-destroy') }}";
+            checked.forEach(cb => {
+                const input = document.createElement('input');
+                input.type = 'hidden';
+                input.name = 'files[]';
+                input.value = cb.value;
+                container.appendChild(input);
+            });
+            
             form.submit();
         }
     }

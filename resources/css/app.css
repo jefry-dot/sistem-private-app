@@ -24,6 +24,7 @@
     --ps-cyan:   #00c0ef;
 
     --accent:        #5e50a1; /* Mulia Grup Purple */
+    --accent-hover:  #7062b3;
     --accent-light:  #f3f0ff;
     
     --topbar-bg:     #1a1a1a;
@@ -764,7 +765,8 @@ html.dark .mobile-nav-backdrop {
     letter-spacing: -0.01em;
 }
 .btn-primary:hover {
-    background: var(--accent-hover);
+    background-color: var(--accent-hover, #7062b3) !important;
+    color: #ffffff !important;
     transform: translateY(-1px);
     box-shadow: 0 4px 12px rgba(129, 140, 248, 0.35);
 }

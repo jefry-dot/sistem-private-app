@@ -8,7 +8,7 @@
         <title>{{ get_setting('site_name', config('app.name', 'Mulia Grup')) }}</title>
 
         <!-- Favicon -->
-        <link rel="icon" type="image/x-icon" href="{{ get_setting('site_favicon', '/favicon.ico') }}">
+        <link rel="icon" type="image/png" href="{{ asset('logo-2.png') }}?v=2">
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -68,14 +68,6 @@
                         <div class="flex items-center gap-4 lg:gap-6 text-[13px] font-medium text-white/90">
                             <span class="hidden sm:inline-block hover:text-white cursor-pointer">{{ Auth::user()->name }}</span>
                             
-                            <div class="flex items-center gap-1 hover:text-white cursor-pointer">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
-                                </svg>
-                                <span class="hidden sm:inline">Bahasa</span>
-                                <svg width="10" height="10" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path d="M19 9l-7 7-7-7"/></svg>
-                            </div>
-
                             <a href="{{ route('profile.edit') }}" class="flex items-center gap-1 hover:text-white cursor-pointer text-white/90 no-underline">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />

@@ -5,8 +5,8 @@
 <aside class="sidebar">
     <div class="sidebar-header" style="height: 64px; display: flex; align-items: center; padding: 0 1.5rem; background: var(--topbar-bg);">
         <a href="{{ route('dashboard') }}" style="display: flex; align-items: center; gap: 0.75rem; text-decoration: none;">
-            <img src="/logo-2.png" alt="Logo" style="height: 40px; width: auto; object-fit: contain;">
-            <span style="font-size: 1.125rem; font-weight: 700; color: #fff; letter-spacing: -0.02em;">Mulia Grup</span>
+            <img src="{{ get_setting('site_logo', '/logo-2.png') }}" alt="Logo" style="height: 40px; width: auto; object-fit: contain;">
+            <span style="font-size: 1.125rem; font-weight: 700; color: #fff; letter-spacing: -0.02em;">{{ get_setting('site_name', 'Mulia Grup') }}</span>
         </a>
     </div>
 

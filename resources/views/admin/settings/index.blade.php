@@ -80,9 +80,8 @@
                                         <x-input-label value="Favicon (Tab Browser)" class="font-bold text-primary uppercase text-xs tracking-widest" />
                                         <div class="p-6 bg-elevated rounded-2xl border-2 border-dashed border-subtle flex flex-col items-center justify-center space-y-4">
                                             <div class="p-2 bg-surface shadow-sm rounded border border-subtle">
-                                                <img src="{{ get_setting('site_favicon', '/favicon.ico') }}" alt="Favicon Preview" class="h-8 w-8">
-                                            </div>
-                                            <input type="file" name="site_favicon" class="text-xs text-secondary file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-bold file:bg-accent-light file:text-accent hover:file:bg-accent-muted">
+                                                <img src="{{ get_setting('site_favicon', get_setting('site_logo', '/logo-2.png')) }}?v=2" alt="Favicon Preview" class="h-8 w-8">
+                                            </div>                                            <input type="file" name="site_favicon" class="text-xs text-secondary file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-bold file:bg-accent-light file:text-accent hover:file:bg-accent-muted">
                                         </div>
                                     </div>
                                 </div>

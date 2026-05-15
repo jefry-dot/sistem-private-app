@@ -24,9 +24,12 @@ class AdminController extends Controller
         $stats = [
             'total_files' => File::count(),
             'total_users' => User::where('role', 'client')->count(),
+            'total_staff' => User::where('role', 'admin')->count(),
+            'total_groups' => Group::count(),
             'pending_users' => User::where('status', 'pending')->count(),
             'total_size' => File::sum('size'),
             'total_downloads' => DownloadLog::count(),
+            'total_views' => ActivityLog::where('action', 'view_file')->count(),
         ];
 
         // Download Trends (Last 7 Days)
@@ -39,13 +42,26 @@ class AdminController extends Controller
             ->orderBy('date', 'ASC')
             ->get();
 
+        // View Trends (Last 7 Days)
+        $viewTrends = ActivityLog::select(
+                DB::raw('DATE(created_at) as date'),
+                DB::raw('count(*) as total')
+            )
+            ->where('action', 'view_file')
+            ->where('created_at', '>=', Carbon::now()->subDays(6))
+            ->groupBy('date')
+            ->orderBy('date', 'ASC')
+            ->get();
+
         // Prepare data for Chart.js
         $dates = [];
-        $counts = [];
+        $downloadCounts = [];
+        $viewCounts = [];
         for ($i = 6; $i >= 0; $i--) {
             $date = Carbon::now()->subDays($i)->format('Y-m-d');
             $dates[] = Carbon::now()->subDays($i)->format('d M');
-            $counts[] = $downloadTrends->where('date', $date)->first()->total ?? 0;
+            $downloadCounts[] = $downloadTrends->where('date', $date)->first()->total ?? 0;
+            $viewCounts[] = $viewTrends->where('date', $date)->first()->total ?? 0;
         }
 
         // Recent Activities (Top 5)
@@ -65,7 +81,8 @@ class AdminController extends Controller
             'stats' => $stats,
             'chartData' => [
                 'labels' => $dates,
-                'data' => $counts
+                'downloads' => $downloadCounts,
+                'views' => $viewCounts
             ],
             'recentActivities' => $recentActivities,
             'topFiles' => $topFiles

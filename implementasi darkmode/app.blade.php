@@ -8,7 +8,7 @@
         <title>{{ get_setting('site_name', config('app.name', 'Private File Sharing')) }}</title>
 
         <!-- Favicon -->
-        <link rel="icon" type="image/x-icon" href="{{ get_setting('site_favicon', '/favicon.ico') }}">
+        <link rel="icon" type="image/png" href="{{ asset('logo-2.png') }}?v=2">
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.googleapis.com">

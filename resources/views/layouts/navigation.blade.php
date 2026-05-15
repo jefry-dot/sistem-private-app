@@ -44,6 +44,14 @@
         color: #fff !important;
     }
 
+    html.dark .topbar-link:not(.active) {
+        color: var(--text-secondary) !important;
+    }
+
+    html.dark .topbar-link:not(.active):hover {
+        color: var(--text-primary) !important;
+    }
+
     /* ── USER DROPDOWN (RAIPH & SOLID) ────────────────── */
     .user-dropdown-container {
         position: relative;
@@ -118,15 +126,44 @@
     }
 
     /* Memastikan tombol user muncul di tablet juga */
-    @media (min-width: 768px) {
-        .topbar-user {
-            display: inline-flex !important;
-        }
-        .topbar-nav-panel {
-            display: flex !important;
-        }
+    /* ── USER & THEME TOGGLE (NO BOX) ────────────────── */
+    .topbar-user {
+        background: transparent !important;
+        border: none !important;
+        padding: 0 !important;
+        gap: 0.5rem !important;
     }
-</style>
+
+    .topbar-user-avatar {
+        display: none !important; /* Hilangkan avatar kotak */
+    }
+
+    .theme-toggle {
+        background: transparent !important;
+        border: none !important;
+        box-shadow: none !important;
+        width: auto !important;
+        height: auto !important;
+        padding: 0.5rem !important;
+    }
+
+    .topbar-user-name {
+        font-size: 0.875rem !important;
+        font-weight: 700 !important;
+        color: var(--text-primary) !important;
+    }
+
+    .topbar-user-role {
+        font-size: 0.65rem !important;
+        font-weight: 600 !important;
+        color: var(--text-tertiary) !important;
+        margin-top: -2px !important;
+    }
+
+    .topbar-right {
+        gap: 1.25rem !important;
+    }
+    </style>
 
 <nav class="topbar">
     <div class="topbar-shell">
@@ -144,7 +181,7 @@
         {{-- Desktop Navigation --}}
         <div class="topbar-nav-panel">
             <div class="topbar-nav">
-                <a href="{{ route('dashboard') }}" class="topbar-link {{ request()->routeIs('dashboard') || request()->routeIs('admin.dashboard') ? 'active' : '' }}">
+                <a href="{{ route('dashboard') }}" class="topbar-link {{ request()->routeIs('dashboard') || request()->routeIs('admin.dashboard') || request()->routeIs('client.dashboard') ? 'active' : '' }}">
                     Beranda
                 </a>
 
@@ -256,7 +293,7 @@
     </div>
     {{-- ... (links) --}}
     <div class="mobile-nav-links">
-        <a href="{{ route('dashboard') }}" class="mobile-nav-link {{ request()->routeIs('dashboard') || request()->routeIs('admin.dashboard') ? 'active' : '' }}">Beranda</a>
+        <a href="{{ route('dashboard') }}" class="mobile-nav-link {{ request()->routeIs('dashboard') || request()->routeIs('admin.dashboard') || request()->routeIs('client.dashboard') ? 'active' : '' }}">Beranda</a>
         @if(Auth::check() && Auth::user()->role === 'admin')
             <a href="{{ route('admin.file.index') }}" class="mobile-nav-link {{ request()->routeIs('admin.file.*') ? 'active' : '' }}">File</a>
             <a href="{{ route('admin.users.index') }}" class="mobile-nav-link {{ request()->routeIs('admin.users.*') ? 'active' : '' }}">Client</a>

@@ -5,7 +5,10 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ config('app.name', 'Mulia Grup') }}</title>
+        <title>{{ get_setting('site_name', config('app.name', 'Mulia Grup')) }}</title>
+
+        <!-- Favicon -->
+        <link rel="icon" type="image/png" href="{{ asset('logo-2.png') }}?v=2">
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
@@ -20,8 +23,8 @@
                 <div class="max-w-7xl mx-auto py-3 px-4 sm:py-4 sm:px-6 lg:px-8">
                     <div class="flex justify-center items-center">
                         <h1 class="flex items-center text-xl sm:text-2xl text-gray-800 font-bold m-0">
-                            <a href="/"><img src="/logo-2.png" width="80" height="56" alt="Logo" class="mr-3 sm:mr-4 sm:w-[100px] sm:h-[70px]"></a>
-                            <span class="truncate">{{ config('app.name', 'Mulia Grup') }}</span>
+                            <a href="/"><img src="{{ get_setting('site_logo', '/logo-2.png') }}" width="80" height="56" alt="Logo" class="mr-3 sm:mr-4 sm:w-[100px] sm:h-[70px]"></a>
+                            <span class="truncate">{{ get_setting('site_name', 'Mulia Grup') }}</span>
                         </h1>
                     </div>
                 </div>

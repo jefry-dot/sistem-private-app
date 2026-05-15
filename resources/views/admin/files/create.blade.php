@@ -238,26 +238,30 @@
 
         {{-- ── ACCESS SECTION ────────────────────────────────── --}}
         <div class="form-section-card">
-            <p class="section-label mb-4">Berikan Akses Ke</p>
+            <p class="section-label mb-4">Detail & Akses Berkas</p>
             
             <div class="space-y-6">
-                {{-- Klien Individu --}}
+                {{-- Kategori --}}
                 <div>
-                    <p style="font-size:0.75rem; font-weight:700; color:var(--text-tertiary); text-transform:uppercase; letter-spacing:0.05em; margin-bottom:0.75rem;">Individu</p>
-                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-2">
-                        @foreach($clients as $client)
-                        <label class="access-option">
-                            <input type="checkbox" name="users[]" value="{{ $client->id }}" style="accent-color:var(--accent);">
-                            <span class="truncate text-xs font-bold text-gray-700">{{ $client->name }}</span>
-                        </label>
+                    <label style="font-size:0.75rem; font-weight:700; color:var(--text-tertiary); text-transform:uppercase; letter-spacing:0.05em; margin-bottom:0.75rem; display:block;">Pilih Kategori</label>
+                    <select name="category_id" required class="form-input w-full" style="background: var(--bg-surface); color: var(--text-primary); border: 1.5px solid var(--border-subtle); padding: 0.75rem 1rem; border-radius: 12px; appearance: none; background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23aeaeb2%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpolyline%20points%3D%226%209%2012%2015%2018%209%22%3E%3C%2Fpolyline%3E%3C%2Fsvg%3E'); background-repeat: no-repeat; background-position: right 1rem center; background-size: 1em;">
+                        <option value="" disabled selected>Pilih kategori...</option>
+                        @foreach($categories as $category)
+                            <option value="{{ $category->id }}">{{ $category->name }}</option>
                         @endforeach
-                    </div>
+                    </select>
+                </div>
+
+                {{-- Deskripsi Opsional --}}
+                <div>
+                    <label style="font-size:0.75rem; font-weight:700; color:var(--text-tertiary); text-transform:uppercase; letter-spacing:0.05em; margin-bottom:0.75rem; display:block;">Deskripsi (Opsional)</label>
+                    <textarea name="description" rows="3" class="form-input w-full" style="background: var(--bg-surface); color: var(--text-primary); border: 1.5px solid var(--border-subtle); padding: 0.75rem 1rem; border-radius: 12px;" placeholder="Tambahkan catatan singkat tentang file ini..."></textarea>
                 </div>
 
                 {{-- Grup --}}
                 @if($groups->count() > 0)
                 <div>
-                    <p style="font-size:0.75rem; font-weight:700; color:var(--text-tertiary); text-transform:uppercase; letter-spacing:0.05em; margin-bottom:0.75rem;">Grup / Departemen</p>
+                    <p style="font-size:0.75rem; font-weight:700; color:var(--text-tertiary); text-transform:uppercase; letter-spacing:0.05em; margin-bottom:0.75rem;">Berikan Akses Ke Grup</p>
                     <div class="grid grid-cols-2 sm:grid-cols-3 gap-2">
                         @foreach($groups as $group)
                         <label class="access-option">
