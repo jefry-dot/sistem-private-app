@@ -16,8 +16,8 @@
     }
 
     .topbar-shell {
-        /* Menggunakan background solid, bukan gradient transparan */
-        background: var(--bg-surface) !important;
+        /* Menggunakan background solid dari variabel topbar */
+        background: var(--topbar-bg) !important;
         backdrop-filter: blur(10px) !important;
         border: 1px solid var(--border-strong) !important;
         box-shadow: 0 10px 30px -10px rgba(0,0,0,0.1) !important;
@@ -25,7 +25,7 @@
     }
 
     html.dark .topbar-shell {
-        background: var(--bg-surface) !important;
+        background: var(--topbar-bg) !important;
         box-shadow: 0 10px 40px -10px rgba(0,0,0,0.4) !important;
     }
 
@@ -321,12 +321,4 @@
             dropdown.classList.remove('open');
         }
     });
-
-    const themeBtn = document.getElementById('themeToggle');
-    if (themeBtn) {
-        themeBtn.addEventListener('click', () => {
-            const isDark = document.documentElement.classList.toggle('dark');
-            localStorage.setItem('theme', isDark ? 'dark' : 'light');
-        });
-    }
 </script>

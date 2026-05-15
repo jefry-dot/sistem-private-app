@@ -4,7 +4,7 @@
     <style>
         /* ── STAT CARDS (Mulia Grup Colorful Style) ───────── */
         .stat-card-ps {
-            border-radius: 4px;
+            border-radius: 12px;
             padding: 1.5rem;
             color: #fff;
             display: flex;
@@ -12,6 +12,7 @@
             position: relative;
             overflow: hidden;
             min-height: 120px;
+            box-shadow: 0 10px 20px -5px rgba(0,0,0,0.1);
         }
 
         .stat-card-ps .value {
@@ -21,72 +22,93 @@
         }
 
         .stat-card-ps .label {
-            font-size: 1.125rem;
-            font-weight: 500;
+            font-size: 0.875rem;
+            font-weight: 700;
             margin-top: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            opacity: 0.9;
         }
 
         .stat-card-ps .icon-bg {
             position: absolute;
-            right: 0.5rem;
-            bottom: 0.5rem;
-            opacity: 0.2;
-            width: 80px;
-            height: 80px;
+            right: -0.5rem;
+            bottom: -0.5rem;
+            opacity: 0.15;
+            width: 100px;
+            height: 100px;
+            transform: rotate(-10deg);
         }
 
-        .bg-orange-ps { background-color: var(--ps-orange); }
-        .bg-green-ps  { background-color: var(--ps-green); }
-        .bg-purple-ps { background-color: var(--ps-purple); }
-        .bg-red-ps    { background-color: var(--ps-red); }
-        .bg-cyan-ps   { background-color: var(--ps-cyan); }
+        .bg-orange-ps { background: linear-gradient(135deg, #f39c12, #e67e22); }
+        .bg-green-ps  { background: linear-gradient(135deg, #27ae60, #2ecc71); }
+        .bg-purple-ps { background: linear-gradient(135deg, #8e44ad, #9b59b6); }
+        .bg-red-ps    { background: linear-gradient(135deg, #e74c3c, #c0392b); }
+        .bg-cyan-ps   { background: linear-gradient(135deg, #00c0ef, #3498db); }
 
         /* ── TABS ─────────────────────────────────────────── */
         .tab-btn {
             padding: 0.5rem 1.25rem;
-            font-size: 0.875rem;
-            font-weight: 600;
-            border-radius: 4px;
-            background: #e2e8f0;
-            color: #4a5568;
-            border: none;
+            font-size: 0.75rem;
+            font-weight: 700;
+            border-radius: 8px;
+            background: var(--bg-elevated);
+            color: var(--text-secondary);
+            border: 1px solid var(--border-subtle);
             cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            transition: all 0.2s;
         }
 
         .tab-btn.active {
             background: var(--accent);
             color: #fff;
+            border-color: var(--accent);
+            box-shadow: 0 4px 12px rgba(94, 80, 161, 0.25);
         }
 
         /* ── RECENT ACTIVITIES ────────────────────────────── */
         .activity-card {
-            background: #fff;
-            border: 1px solid var(--border-strong);
-            border-radius: 4px;
+            background: var(--bg-surface);
+            border: 1px solid var(--border-subtle);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: var(--shadow-card);
         }
 
         .activity-header {
-            padding: 1rem;
-            border-bottom: 1px solid var(--border-strong);
-            font-weight: 700;
+            padding: 1.25rem;
+            border-bottom: 1px solid var(--border-subtle);
+            font-weight: 800;
             font-size: 0.875rem;
-            color: #4a5568;
+            color: var(--text-primary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            background: var(--bg-elevated);
         }
 
         .activity-list-item {
-            padding: 0.75rem 1rem;
+            padding: 1rem 1.25rem;
             display: flex;
             align-items: center;
-            gap: 1rem;
+            gap: 1.25rem;
             border-bottom: 1px solid var(--border-subtle);
+            transition: background 0.2s;
+        }
+
+        .activity-list-item:hover {
+            background: var(--bg-elevated);
         }
 
         .activity-date {
-            font-size: 0.75rem;
-            font-weight: 700;
-            color: #4a5568;
+            font-family: 'DM Mono', monospace;
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: var(--text-tertiary);
             width: 80px;
             flex-shrink: 0;
+            text-align: right;
         }
 
         .activity-icon {
@@ -95,12 +117,13 @@
 
         .activity-text {
             font-size: 0.8125rem;
-            color: #4a5568;
+            color: var(--text-secondary);
+            line-height: 1.4;
         }
     </style>
 
     {{-- ── STATS ROW ────────────────────────────────────────── --}}
-    <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6 mb-8">
+    <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4 mb-8">
         {{-- Files --}}
         <div class="stat-card-ps bg-orange-ps">
             <span class="value">{{ number_format($stats['total_files']) }}</span>
@@ -139,13 +162,13 @@
 
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {{-- LEFT: STATISTICS --}}
-        <div class="lg:col-span-2">
-            <div class="bg-white border border-strong rounded-sm p-4 sm:p-6">
+        <div class="lg:col-span-2 space-y-8">
+            <div class="card p-6">
                 <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-6 gap-4">
-                    <h3 id="chartTitle" class="text-sm font-bold text-gray-600 uppercase tracking-widest">Tren Unduhan</h3>
+                    <h3 id="chartTitle" class="section-label !before:hidden !p-0">Tren Unduhan</h3>
                     <div class="flex flex-wrap gap-2">
-                        <button onclick="updateChart('downloads')" id="btn-downloads" class="tab-btn active text-[10px] sm:text-xs">Unduhan</button>
-                        <button onclick="updateChart('views')" id="btn-views" class="tab-btn text-[10px] sm:text-xs">Lihat Berkas</button>
+                        <button onclick="updateChart('downloads')" id="btn-downloads" class="tab-btn active">Unduhan</button>
+                        <button onclick="updateChart('views')" id="btn-views" class="tab-btn">Lihat Berkas</button>
                     </div>
                 </div>
 
@@ -154,40 +177,40 @@
                 </div>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                 {{-- Mulia Grup news --}}
-                <div class="bg-white border border-strong rounded-sm overflow-hidden">
-                    <div class="p-4 border-b border-strong font-bold text-sm text-gray-600">Berita Mulia Grup</div>
+                <div class="card overflow-hidden">
+                    <div class="p-4 border-b border-subtle bg-elevated font-bold text-xs uppercase tracking-widest text-secondary" style="color: var(--text-secondary);">Berita Mulia Grup</div>
                     <div class="p-6">
-                        <span class="text-[11px] text-gray-400">{{ date('d/m/Y') }}</span>
-                        <h4 class="text-ps-purple font-bold text-sm mt-1">Sistem Operasional</h4>
-                        <p class="text-xs text-gray-600 mt-2 leading-relaxed">
+                        <span class="text-[10px] font-mono text-tertiary" style="color: var(--text-tertiary);">{{ date('d/m/Y') }}</span>
+                        <h4 class="text-accent font-bold text-sm mt-1" style="color: var(--accent);">Sistem Operasional</h4>
+                        <p class="text-xs text-secondary mt-2 leading-relaxed" style="color: var(--text-secondary);">
                             Sistem Manajemen Privat Mulia Grup telah beroperasi sepenuhnya. Anda sekarang dapat mengelola dokumen secara aman dan membagikannya kepada klien di seluruh departemen.
                         </p>
                     </div>
                 </div>
 
                 {{-- System information --}}
-                <div class="bg-white border border-strong rounded-sm overflow-hidden">
-                    <div class="p-4 border-b border-strong font-bold text-sm text-gray-600">Informasi sistem</div>
-                    <div class="p-4">
-                        <div class="uppercase text-[11px] font-bold text-gray-500 mb-4 tracking-widest">Lingkungan</div>
-                        <table class="w-full text-xs text-gray-600">
+                <div class="card overflow-hidden">
+                    <div class="p-4 border-b border-subtle bg-elevated font-bold text-xs uppercase tracking-widest text-secondary" style="color: var(--text-secondary);">Informasi sistem</div>
+                    <div class="p-6">
+                        <div class="uppercase text-[10px] font-bold text-tertiary mb-4 tracking-widest" style="color: var(--text-tertiary);">Lingkungan</div>
+                        <table class="w-full text-xs text-secondary" style="color: var(--text-secondary);">
                             <tr>
-                                <td class="py-1 text-right pr-4 w-1/2">Nama Sistem</td>
-                                <td class="py-1 font-bold">Mulia Grup Private System</td>
+                                <td class="py-1 text-right pr-4 w-1/2 text-tertiary">Nama Sistem</td>
+                                <td class="py-1 font-bold text-primary">Mulia Grup Private System</td>
                             </tr>
                             <tr>
-                                <td class="py-1 text-right pr-4">Total Ukuran File</td>
-                                <td class="py-1 font-bold">{{ round($stats['total_size'] / 1024 / 1024, 2) }} MB</td>
+                                <td class="py-1 text-right pr-4 text-tertiary">Total Ukuran File</td>
+                                <td class="py-1 font-bold text-primary">{{ round($stats['total_size'] / 1024 / 1024, 2) }} MB</td>
                             </tr>
                             <tr>
-                                <td class="py-1 text-right pr-4">Total Dilihat</td>
-                                <td class="py-1 font-bold">{{ number_format($stats['total_views']) }} kali</td>
+                                <td class="py-1 text-right pr-4 text-tertiary">Total Dilihat</td>
+                                <td class="py-1 font-bold text-primary">{{ number_format($stats['total_views']) }} kali</td>
                             </tr>
                             <tr>
-                                <td class="py-1 text-right pr-4">Ukuran Upload Maks</td>
-                                <td class="py-1 font-bold">50 MB</td>
+                                <td class="py-1 text-right pr-4 text-tertiary">Ukuran Upload Maks</td>
+                                <td class="py-1 font-bold text-primary">50 MB</td>
                             </tr>
                         </table>
                     </div>
@@ -198,11 +221,11 @@
         {{-- RIGHT: RECENT ACTIVITIES --}}
         <div>
             <div class="activity-card">
-                <div class="activity-header flex items-center justify-between">
-                    <span>Aktivitas terbaru</span>
+                <div class="activity-header">
+                    Aktivitas terbaru
                 </div>
-                <div class="p-4 border-b border-strong">
-                    <select class="w-full text-sm border-strong rounded-sm py-1.5 focus:border-ps-purple outline-none">
+                <div class="p-4 border-b border-subtle bg-elevated">
+                    <select class="w-full text-xs bg-surface border-subtle rounded-lg py-2 px-3 focus:border-accent outline-none text-secondary" style="background: var(--bg-surface); color: var(--text-secondary); border: 1px solid var(--border-subtle);">
                         <option>Semua Aktivitas</option>
                     </select>
                 </div>
@@ -211,18 +234,18 @@
                     <div class="activity-list-item">
                         <span class="activity-date">{{ $activity->created_at->format('d/m/Y') }}</span>
                         <div class="flex flex-col min-w-0">
-                            <span class="activity-text font-bold text-ps-purple">{{ $activity->user->name ?? 'System' }}</span>
-                            <span class="activity-text truncate">{{ $activity->description }}</span>
+                            <span class="activity-text font-bold text-accent" style="color: var(--accent);">{{ $activity->user->name ?? 'System' }}</span>
+                            <span class="activity-text truncate text-secondary" style="color: var(--text-secondary);">{{ $activity->description }}</span>
                         </div>
                     </div>
                     @empty
-                    <div class="p-6 text-center text-xs text-gray-400">
+                    <div class="p-8 text-center text-xs text-tertiary italic">
                         Tidak ada aktivitas tercatat.
                     </div>
                     @endforelse
                 </div>
-                <div class="p-4 flex justify-end">
-                    <a href="{{ route('admin.activity-logs.index') }}" class="bg-ps-purple text-white text-xs font-bold py-2 px-6 rounded-sm hover:opacity-90 no-underline">Lihat semua</a>
+                <div class="p-4 bg-elevated border-t border-subtle">
+                    <a href="{{ route('admin.activity-logs.index') }}" class="btn-primary !w-full !justify-center !text-[10px] uppercase tracking-widest font-bold py-2.5">Lihat semua</a>
                 </div>
             </div>
         </div>
@@ -238,7 +261,16 @@
             views: {!! json_encode($chartData['views']) !!}
         };
 
+        function getChartThemeColors() {
+            const isDark = document.documentElement.classList.contains('dark');
+            return {
+                text: isDark ? '#a1a1aa' : '#718096',
+                grid: isDark ? 'rgba(255, 255, 255, 0.05)' : 'rgba(0, 0, 0, 0.05)',
+            };
+        }
+
         function initChart() {
+            const colors = getChartThemeColors();
             const ctx = document.getElementById('activityChart').getContext('2d');
             activityChart = new Chart(ctx, {
                 type: 'line',
@@ -265,12 +297,19 @@
                     scales: {
                         y: {
                             beginAtZero: true,
-                            ticks: { stepSize: 1, font: { size: 11 } },
-                            grid: { color: 'rgba(0,0,0,0.05)' }
+                            ticks: { 
+                                stepSize: 1, 
+                                font: { size: 11, family: "'DM Mono', monospace" },
+                                color: colors.text
+                            },
+                            grid: { color: colors.grid }
                         },
                         x: {
                             grid: { display: false },
-                            ticks: { font: { size: 11 } }
+                            ticks: { 
+                                font: { size: 11, family: "'DM Mono', monospace" },
+                                color: colors.text
+                            }
                         }
                     }
                 }
@@ -294,6 +333,21 @@
             
             activityChart.update();
         }
+
+        // Watch for theme changes
+        const observer = new MutationObserver((mutations) => {
+            mutations.forEach((mutation) => {
+                if (mutation.attributeName === 'class' && activityChart) {
+                    const colors = getChartThemeColors();
+                    activityChart.options.scales.y.ticks.color = colors.text;
+                    activityChart.options.scales.y.grid.color = colors.grid;
+                    activityChart.options.scales.x.ticks.color = colors.text;
+                    activityChart.update();
+                }
+            });
+        });
+
+        observer.observe(document.documentElement, { attributes: true });
 
         document.addEventListener('DOMContentLoaded', initChart);
     </script>

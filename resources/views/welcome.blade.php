@@ -56,14 +56,14 @@
             </style>
         @endif
     </head>
-    <body class="bg-[#FDFDFC] dark:bg-[#0a0a0a] text-[#1b1b18] flex p-6 lg:p-8 items-center lg:justify-center min-h-screen flex-col">
-        <div class="max-w-md w-full bg-white dark:bg-[#161615] p-8 rounded-2xl shadow-xl border border-gray-100 dark:border-[#2a2a2a] text-center">
+    <body class="flex p-6 lg:p-8 items-center lg:justify-center min-h-screen flex-col">
+        <div class="max-w-md w-full bg-surface p-8 rounded-2xl shadow-xl border border-subtle text-center" style="background: var(--bg-surface); border: 1px solid var(--border-subtle);">
             <img src="{{ get_setting('site_logo', '/logo-2.png') }}" alt="{{ get_setting('site_name', 'Mulia Grup') }} Logo" class="mx-auto h-20 mb-8">
             
-            <h1 class="text-3xl font-bold mb-4 dark:text-white">{{ get_setting('site_name', 'Mulia Grup') }}</h1>
-            <h2 class="text-xl font-semibold mb-6 text-gray-600 dark:text-gray-400 tracking-tight">Sistem Manajemen Privat</h2>
+            <h1 class="text-3xl font-bold mb-4 text-primary" style="color: var(--text-primary);">{{ get_setting('site_name', 'Mulia Grup') }}</h1>
+            <h2 class="text-xl font-semibold mb-6 text-secondary tracking-tight" style="color: var(--text-secondary);">Sistem Manajemen Privat</h2>
             
-            <p class="text-gray-500 dark:text-gray-400 mb-10 leading-relaxed">
+            <p class="text-tertiary mb-10 leading-relaxed" style="color: var(--text-tertiary);">
                 Selamat datang di sistem internal kami yang aman. Platform ini dikhususkan hanya untuk personel resmi Mulia Grup.
             </p>
 
