@@ -44,6 +44,7 @@
                         <thead>
                             <tr>
                                 <th>Nama Klien</th>
+                                <th class="hidden md:table-cell">Username</th>
                                 <th class="hidden md:table-cell">Email</th>
                                 <th class="hidden sm:table-cell">Grup</th>
                                 <th>Status</th>
@@ -60,6 +61,9 @@
                                         </div>
                                         <span class="font-bold text-accent text-sm">{{ $user->name }}</span>
                                     </div>
+                                </td>
+                                <td class="hidden md:table-cell">
+                                    <span class="text-xs text-gray-500">{{ $user->username }}</span>
                                 </td>
                                 <td class="hidden md:table-cell">
                                     <span class="text-xs text-gray-500">{{ $user->email }}</span>
@@ -134,6 +138,10 @@
                         <div>
                             <label class="section-label mb-2">Nama Lengkap</label>
                             <input type="text" name="name" required class="form-input w-full" style="background: var(--bg-surface); color: var(--text-primary); border: 1px solid var(--border-subtle); padding: 0.5rem 0.75rem; border-radius: 8px;" placeholder="Nama klien...">
+                        </div>
+                        <div>
+                            <label class="section-label mb-2">Username</label>
+                            <input type="text" name="username" required class="form-input w-full" style="background: var(--bg-surface); color: var(--text-primary); border: 1px solid var(--border-subtle); padding: 0.5rem 0.75rem; border-radius: 8px;" placeholder="username123...">
                         </div>
                         <div>
                             <label class="section-label mb-2">Email Perusahaan</label>

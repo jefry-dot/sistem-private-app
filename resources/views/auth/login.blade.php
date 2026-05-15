@@ -17,11 +17,11 @@
     <form method="POST" action="{{ route('login') }}" class="space-y-5">
         @csrf
 
-        <!-- Email Address -->
+        <!-- Username -->
         <div class="space-y-1">
-            <x-input-label for="email" :value="__('Alamat Email')" class="font-bold text-xs uppercase tracking-widest text-gray-500" />
-            <x-text-input id="email" class="block mt-1 w-full !rounded-xl !border-gray-200 focus:!border-accent focus:!ring-accent/10" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" placeholder="nama@email.com" />
-            <x-input-error :messages="$errors->get('email')" class="mt-1" />
+            <x-input-label for="username" :value="__('Username')" class="font-bold text-xs uppercase tracking-widest text-gray-500" />
+            <x-text-input id="username" class="block mt-1 w-full !rounded-xl !border-gray-200 focus:!border-accent focus:!ring-accent/10" type="text" name="username" :value="old('username')" required autofocus autocomplete="username" placeholder="Masukkan username Anda" />
+            <x-input-error :messages="$errors->get('username')" class="mt-1" />
         </div>
 
         <!-- Password -->

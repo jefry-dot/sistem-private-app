@@ -42,6 +42,7 @@
                             <thead>
                                 <tr>
                                     <th>Nama Klien</th>
+                                    <th>Username</th>
                                     <th>Email</th>
                                     <th class="text-right">Waktu Pendaftaran</th>
                                     <th class="text-right">Aksi</th>
@@ -58,6 +59,7 @@
                                                 <span class="font-bold text-accent text-sm">{{ $user->name }}</span>
                                             </div>
                                         </td>
+                                        <td class="text-secondary text-sm">{{ $user->username }}</td>
                                         <td class="text-secondary text-sm">{{ $user->email }}</td>
                                         <td class="text-right text-[10px] font-mono text-tertiary">{{ $user->created_at->format('d M Y, H:i') }}</td>
                                         <td class="text-right">

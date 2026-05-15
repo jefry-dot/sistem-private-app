@@ -19,6 +19,8 @@
                             {{ $user->name }}
                         </h1>
                         <p style="font-size:0.875rem;color:var(--text-tertiary);margin:0;display:flex;align-items:center;gap:0.5rem;">
+                            <span class="font-bold text-accent">@</span>{{ $user->username }}
+                            <span class="w-1 h-1 rounded-full bg-gray-300"></span>
                             {{ $user->email }}
                             <span class="w-1 h-1 rounded-full bg-gray-300"></span>
                             @if($user->status === 'active')
@@ -45,6 +47,10 @@
                     <div>
                         <p class="section-label mb-4">Informasi Akun</p>
                         <div class="space-y-4">
+                            <div>
+                                <p class="text-[10px] text-tertiary uppercase tracking-widest font-bold">Username</p>
+                                <p class="text-sm font-bold text-accent">@</span>{{ $user->username }}</p>
+                            </div>
                             <div>
                                 <p class="text-[10px] text-tertiary uppercase tracking-widest font-bold">Terdaftar Pada</p>
                                 <p class="text-sm font-bold text-primary">{{ $user->created_at->format('d F Y') }}</p>

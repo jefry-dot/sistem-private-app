@@ -14,6 +14,13 @@
             <x-input-error :messages="$errors->get('name')" class="mt-1" />
         </div>
 
+        <!-- Username -->
+        <div class="space-y-1">
+            <x-input-label for="username" :value="__('Username')" class="font-bold text-xs uppercase tracking-widest text-gray-500" />
+            <x-text-input id="username" class="block mt-1 w-full !rounded-xl !border-gray-200 focus:!border-accent focus:!ring-accent/10" type="text" name="username" :value="old('username')" required autocomplete="username" placeholder="johndoe123" />
+            <x-input-error :messages="$errors->get('username')" class="mt-1" />
+        </div>
+
         <!-- Email Address -->
         <div class="space-y-1">
             <x-input-label for="email" :value="__('Alamat Email')" class="font-bold text-xs uppercase tracking-widest text-gray-500" />
