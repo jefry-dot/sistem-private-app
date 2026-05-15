@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 
 class FileController extends Controller
 {
@@ -22,7 +23,8 @@ class FileController extends Controller
 
         // Search
         if ($request->filled('search')) {
-            $query->where('original_name', 'like', '%' . $request->search . '%');
+            $query->where('original_name', 'like', '%' . $request->search . '%')
+                  ->orWhere('display_name', 'like', '%' . $request->search . '%');
         }
 
         // Type Filter
@@ -84,6 +86,17 @@ class FileController extends Controller
             }
 
             $originalName = $uploadedFile->getClientOriginalName();
+            $displayName = $request->display_name ?? $originalName;
+
+            // Global uniqueness check
+            $duplicate = File::where('original_name', $originalName)
+                ->orWhere('display_name', $displayName)
+                ->first();
+
+            if ($duplicate) {
+                return back()->withInput()->withErrors(['file' => "Berkas dengan nama '" . ($duplicate->original_name === $originalName ? $originalName : $displayName) . "' sudah ada di sistem."]);
+            }
+
             $extension = $uploadedFile->getClientOriginalExtension();
             $size = $uploadedFile->getSize();
             
@@ -95,7 +108,7 @@ class FileController extends Controller
 
             $file = File::create([
                 'original_name' => $originalName,
-                'display_name' => $request->display_name ?? $originalName,
+                'display_name' => $displayName,
                 'description' => $request->description,
                 'file_path' => $path,
                 'extension' => $extension,
@@ -147,13 +160,21 @@ class FileController extends Controller
     public function update(Request $request, File $file)
     {
         $request->validate([
-            'display_name' => 'required|string|max:255',
+            'display_name' => [
+                'required',
+                'string',
+                'max:255',
+                Rule::unique('files', 'display_name')->ignore($file->id),
+                Rule::unique('files', 'original_name')->ignore($file->id),
+            ],
             'description' => 'nullable|string',
             'expires_at' => 'nullable|date',
             'user_ids' => 'nullable|array',
             'user_ids.*' => 'exists:users,id',
             'group_ids' => 'nullable|array',
             'group_ids.*' => 'exists:groups,id',
+        ], [
+            'display_name.unique' => 'Nama tampilan sudah digunakan oleh berkas lain.',
         ]);
 
         $file->update([
