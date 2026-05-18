@@ -377,6 +377,19 @@
                     </div>
 
                     <div class="form-group">
+                        <label class="form-label" for="category_id">
+                            Kategori <span class="req">*</span>
+                        </label>
+                        <select name="category_id" id="category_id" class="form-select trackable" required>
+                            @foreach($categories as $category)
+                                <option value="{{ $category->id }}" {{ old('category_id', $file->category_id) == $category->id ? 'selected' : '' }}>
+                                    {{ $category->name }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div class="form-group">
                         <label class="form-label" for="expires_at">Kadaluarsa</label>
                         <input
                             type="date"

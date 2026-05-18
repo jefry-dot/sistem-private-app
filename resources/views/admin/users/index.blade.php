@@ -106,7 +106,20 @@
                             </tr>
                             @empty
                             <tr>
-                                <td colspan="5" class="text-center py-12 text-gray-400 italic">Belum ada klien terdaftar.</td>
+                                <td colspan="6" style="padding:0;">
+                                    <div class="empty-state">
+                                        <div class="empty-icon-wrap">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="none" viewBox="0 0 24 24" stroke="var(--text-tertiary)" stroke-width="1.25">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>
+                                            </svg>
+                                        </div>
+                                        <h3 style="font-size:0.9375rem;font-weight:700;color:var(--text-primary);margin:0 0 0.375rem;">Belum ada klien</h3>
+                                        <p style="font-size:0.8125rem;color:var(--text-tertiary);margin:0 0 1.25rem;">
+                                            Daftarkan klien baru untuk memberikan akses ke file.
+                                        </p>
+                                        <button @click="addUserModal = true" class="btn-primary">Tambah Client</button>
+                                    </div>
+                                </td>
                             </tr>
                             @endforelse
                         </tbody>

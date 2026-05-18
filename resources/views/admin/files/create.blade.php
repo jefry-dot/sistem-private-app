@@ -306,6 +306,7 @@
     </div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script>
     function handleFileSelect(input) {
         const preview = document.getElementById('file-preview-list');
@@ -339,18 +340,41 @@
         handleFileSelect(input);
     });
 
-    // Form Progress
-    document.getElementById('uploadForm').addEventListener('submit', function() {
-        document.getElementById('progressOverlay').classList.add('active');
-        let val = 0;
+    // Form Progress with Real Axios Upload
+    document.getElementById('uploadForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const form = this;
+        const formData = new FormData(form);
+        const overlay = document.getElementById('progressOverlay');
         const bar = document.getElementById('progressBar');
         const lbl = document.getElementById('progressLabel');
-        const interval = setInterval(() => {
-            val += Math.random() * 8;
-            if (val > 95) clearInterval(interval);
-            bar.style.width = Math.min(val, 95) + '%';
-            lbl.innerText = Math.round(Math.min(val, 95)) + '%';
-        }, 200);
+        
+        overlay.classList.add('active');
+        
+        axios.post(form.action, formData, {
+            onUploadProgress: (progressEvent) => {
+                const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+                bar.style.width = percentCompleted + '%';
+                lbl.innerText = percentCompleted + '%';
+            }
+        })
+        .then(response => {
+            // Check if there's a redirect in the response or handle as success
+            window.location.href = "{{ route('admin.file.create') }}"; 
+        })
+        .catch(error => {
+            overlay.classList.remove('active');
+            if (error.response && error.response.status === 422) {
+                // Validation error, reload to show errors from session or handle manually
+                // For simplicity, we'll re-submit without AJAX if there's a validation error 
+                // OR we could parse error.response.data.errors
+                form.submit(); 
+            } else {
+                alert('Terjadi kesalahan saat mengunggah berkas.');
+                console.error(error);
+            }
+        });
     });
 </script>
 </x-app-layout>

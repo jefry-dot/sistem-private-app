@@ -167,6 +167,7 @@ class FileController extends Controller
                 Rule::unique('files', 'display_name')->ignore($file->id),
                 Rule::unique('files', 'original_name')->ignore($file->id),
             ],
+            'category_id' => 'required|exists:categories,id',
             'description' => 'nullable|string',
             'expires_at' => 'nullable|date',
             'user_ids' => 'nullable|array',
@@ -175,10 +176,12 @@ class FileController extends Controller
             'group_ids.*' => 'exists:groups,id',
         ], [
             'display_name.unique' => 'Nama tampilan sudah digunakan oleh berkas lain.',
+            'category_id.required' => 'Pilih kategori file.',
         ]);
 
         $file->update([
             'display_name' => $request->display_name,
+            'category_id' => $request->category_id,
             'description' => $request->description,
             'expires_at' => $request->expires_at,
         ]);
@@ -297,7 +300,7 @@ class FileController extends Controller
             'files.*' => 'exists:files,id',
         ]);
 
-        $files = File::whereIn('id', $request->files)->get();
+        $files = File::whereIn('id', $request->input('files'))->get();
 
         foreach ($files as $file) {
             if (Storage::disk('private')->exists($file->file_path)) {
@@ -306,8 +309,8 @@ class FileController extends Controller
             $file->delete();
         }
 
-        ActivityLogger::log('bulk_delete_files', "Menghapus " . count($request->files) . " berkas sekaligus.");
+        ActivityLogger::log('bulk_delete_files', "Menghapus " . count($request->input('files')) . " berkas sekaligus.");
 
-        return back()->with('success', count($request->files) . ' berkas berhasil dihapus.');
+        return back()->with('success', count($request->input('files')) . ' berkas berhasil dihapus.');
     }
 }

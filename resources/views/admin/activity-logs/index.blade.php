@@ -61,7 +61,19 @@
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="5" class="text-center py-12 text-tertiary italic">Belum ada log aktivitas yang tercatat.</td>
+                                        <td colspan="5" style="padding:0;">
+                                            <div class="empty-state">
+                                                <div class="empty-icon-wrap">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="none" viewBox="0 0 24 24" stroke="var(--text-tertiary)" stroke-width="1.25">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                                    </svg>
+                                                </div>
+                                                <h3 style="font-size:0.9375rem;font-weight:700;color:var(--text-primary);margin:0 0 0.375rem;">Belum ada log</h3>
+                                                <p style="font-size:0.8125rem;color:var(--text-tertiary);margin:0;">
+                                                    Aktivitas sistem akan muncul di sini secara otomatis.
+                                                </p>
+                                            </div>
+                                        </td>
                                     </tr>
                                 @endforelse
                             </tbody>
