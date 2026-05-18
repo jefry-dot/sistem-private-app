@@ -78,9 +78,9 @@
                             <p class="text-[10px] text-accent font-bold uppercase tracking-widest">Total Unduhan</p>
                             <p class="text-3xl font-black text-accent mt-1">{{ number_format($user->downloadLogs->count()) }}</p>
                         </div>
-                        <div class="p-4 bg-emerald-50 rounded-2xl border border-emerald-100">
-                            <p class="text-[10px] text-emerald-600 font-bold uppercase tracking-widest">Berkas Dapat Diakses</p>
-                            <p class="text-3xl font-black text-emerald-700 mt-1">{{ number_format($files->count()) }}</p>
+                        <div class="p-4 bg-emerald-50 rounded-2xl border border-emerald-100 dark:bg-emerald-900/10 dark:border-emerald-900/20">
+                            <p class="text-[10px] text-emerald-600 dark:text-emerald-400 font-bold uppercase tracking-widest">Berkas Dapat Diakses</p>
+                            <p class="text-3xl font-black text-emerald-700 dark:text-emerald-500 mt-1">{{ number_format($files->count()) }}</p>
                         </div>
                     </div>
                     
@@ -152,9 +152,22 @@
                                     </td>
                                     <td class="text-right text-xs font-mono text-tertiary">{{ round($file->size / 1024 / 1024, 2) }} MB</td>
                                     <td class="text-right">
-                                        <div class="flex justify-end gap-2">
-                                            <a href="{{ route('file.view', $file) }}" target="_blank" class="text-accent hover:underline font-bold text-[10px] uppercase tracking-wider">Preview</a>
-                                            <a href="{{ route('file.download', $file) }}" class="text-accent hover:underline font-bold text-[10px] uppercase tracking-wider">Unduh</a>
+                                        <div class="row-actions">
+                                            {{-- Preview --}}
+                                            @if(in_array(strtolower($file->extension), ['pdf', 'jpg', 'jpeg', 'png', 'webp']))
+                                                <a href="{{ route('file.view', $file) }}" target="_blank" class="row-btn" title="Pratinjau">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                                    </svg>
+                                                </a>
+                                            @endif
+                                            {{-- Download --}}
+                                            <a href="{{ route('file.download', $file) }}" class="row-btn" title="Unduh">
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a2 2 0 002 2h12a2 2 0 002-2v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+                                                </svg>
+                                            </a>
                                         </div>
                                     </td>
                                 </tr>

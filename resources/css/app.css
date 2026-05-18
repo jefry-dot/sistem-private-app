@@ -17,15 +17,15 @@
 
     /* Mulia Grup Colors */
     --ps-orange: #f39c12;
-    --ps-green:  #27ae60;
+    --ps-green:  #006F70;
     --ps-blue:   #3498db;
     --ps-purple: #8e44ad;
     --ps-red:    #e74c3c;
     --ps-cyan:   #00c0ef;
 
-    --accent:        #5e50a1; /* Mulia Grup Purple */
-    --accent-hover:  #7062b3;
-    --accent-light:  #f3f0ff;
+    --accent:        #006F70; /* Mulia Grup Green */
+    --accent-hover:  #005a5c;
+    --accent-light:  #e6f1f1;
     
     --topbar-bg:     #ffffff;
     --sidebar-bg:    #ffffff;
@@ -134,36 +134,36 @@
    DESIGN TOKENS — Dark Mode
    ───────────────────────────────────────────────────────────── */
 html.dark {
-    --bg-base:       #0f0f13;
-    --bg-surface:    #18181f;
-    --bg-elevated:   #1f1f29;
-    --border-subtle: #2a2a38;
-    --border-strong: #35354a;
-    --text-primary:  #e8e8f0;
-    --text-secondary:#a1a1aa;
-    --text-tertiary: #71717a;
+    --bg-base:       #0a0f12; /* Very dark navy/charcoal */
+    --bg-surface:    #12191d;
+    --bg-elevated:   #1a2429;
+    --border-subtle: #1e2a30;
+    --border-strong: #2c3e47;
+    --text-primary:  #e2e8f0;
+    --text-secondary:#94a3b8;
+    --text-tertiary: #64748b;
 
-    /* Accent stays indigo but lighter for dark bg */
-    --accent:        #818cf8;
-    --accent-hover:  #a5b4fc;
-    --accent-light:  #1e1b4b;
-    --accent-muted:  #312e81;
+    /* Accent stays branding green but slightly adjusted if needed */
+    --accent:        #008e90;
+    --accent-hover:  #00afb1;
+    --accent-light:  #002b2c;
+    --accent-muted:  #004647;
 
-    --success:       #34d399;
-    --warning:       #fbbf24;
-    --danger:        #f87171;
+    --success:       #10b981;
+    --warning:       #f59e0b;
+    --danger:        #ef4444;
 
-    --dot-color:     #312e81;
-    --dot-opacity:   0.25;
+    --dot-color:     #1e2a30;
+    --dot-opacity:   0.3;
 
-    --topbar-bg:     rgba(15, 15, 19, 0.85);
-    --footer-bg:     rgba(15, 15, 19, 0.92);
+    --topbar-bg:     rgba(10, 15, 18, 0.85);
+    --footer-bg:     rgba(10, 15, 18, 0.92);
 
-    --sidebar-bg:    #18181f;
-    --sidebar-text:  #a1a1aa;
+    --sidebar-bg:    #12191d;
+    --sidebar-text:  #94a3b8;
 
-    --shadow-card:   0 1px 3px rgba(0,0,0,0.25), 0 1px 2px rgba(0,0,0,0.2);
-    --shadow-hover:  0 4px 16px rgba(0,0,0,0.35);
+    --shadow-card:   0 1px 3px rgba(0,0,0,0.35), 0 1px 2px rgba(0,0,0,0.3);
+    --shadow-hover:  0 4px 16px rgba(0,0,0,0.45);
 
     color-scheme: dark;
 }
@@ -1037,6 +1037,48 @@ html.dark .google-file-title {
 
 .google-action-link:hover {
     text-decoration: underline;
+}
+
+/* ── ROW ACTIONS ─────────────────────────────────── */
+.row-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 0.375rem;
+}
+
+.row-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    border: 1px solid var(--border-subtle);
+    background: var(--bg-surface);
+    color: var(--text-secondary);
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.2s;
+    flex-shrink: 0;
+}
+
+.row-btn:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: var(--accent-light);
+    transform: translateY(-1px);
+}
+
+.row-btn.danger:hover {
+    border-color: var(--danger);
+    color: var(--danger);
+    background: rgba(239, 68, 68, 0.1);
+}
+
+.row-btn svg {
+    width: 16px;
+    height: 16px;
 }
 
 @keyframes slideUp {

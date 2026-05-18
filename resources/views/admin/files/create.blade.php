@@ -48,7 +48,7 @@
     .dropzone:hover,
     .dropzone.dragover {
         border-color: var(--accent);
-        background: #fff;
+        background: var(--bg-surface);
         transform: translateY(-2px);
     }
 
@@ -59,7 +59,7 @@
 
     .dropzone.dragover {
         border-style: solid;
-        box-shadow: 0 0 0 4px rgba(30, 27, 75, 0.1);
+        box-shadow: 0 0 0 4px var(--accent-light);
     }
 
     .dropzone-icon {
@@ -132,7 +132,7 @@
 
     /* ── FORM ELEMENTS ────────────────────────────────────────── */
     .form-section-card {
-        background: #fff;
+        background: var(--bg-surface);
         border: 1px solid var(--border-subtle);
         border-radius: 16px;
         padding: 1.5rem;
@@ -159,7 +159,7 @@
         border-radius: 12px;
         cursor: pointer;
         transition: all 0.2s ease;
-        background: #fff;
+        background: var(--bg-surface);
     }
 
     .access-option:hover {
@@ -177,7 +177,7 @@
     .submit-bar {
         position: sticky;
         bottom: 1.5rem;
-        background: rgba(255,255,255,0.9);
+        background: var(--bg-elevated);
         backdrop-filter: blur(12px);
         padding: 1rem 1.5rem;
         border-radius: 100px;
@@ -189,6 +189,12 @@
         box-shadow: 0 10px 25px rgba(0,0,0,0.05);
         z-index: 10;
     }
+
+    html.dark .submit-bar {
+        background: rgba(26, 36, 41, 0.85);
+        box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+    }
+</style>
 </style>
 
 <div class="upload-page">
@@ -208,10 +214,10 @@
 
     {{-- Error Messages --}}
     @if($errors->any())
-    <div style="padding:1rem; background:#fef2f2; border:1px solid #fecaca; border-radius:12px; margin-bottom:1.5rem; animation: fadeUp 0.3s ease;">
+    <div class="alert-error" style="padding:1rem; background:var(--bg-surface); border:1px solid #fecaca; border-radius:12px; margin-bottom:1.5rem; animation: fadeUp 0.3s ease;">
         @foreach($errors->all() as $error)
-            <div style="color:#b91c1c; font-size:0.8125rem; display:flex; gap:0.5rem; align-items:center;">
-                <span style="width:4px; height:4px; border-radius:50%; background:#dc2626;"></span>
+            <div style="color:#ef4444; font-size:0.8125rem; display:flex; gap:0.5rem; align-items:center;">
+                <span style="width:4px; height:4px; border-radius:50%; background:#ef4444;"></span>
                 {{ $error }}
             </div>
         @endforeach
@@ -266,7 +272,7 @@
                         @foreach($groups as $group)
                         <label class="access-option">
                             <input type="checkbox" name="groups[]" value="{{ $group->id }}" style="accent-color:var(--accent);">
-                            <span class="truncate text-xs font-bold text-gray-700">{{ $group->name }}</span>
+                            <span class="truncate text-xs font-bold text-secondary">{{ $group->name }}</span>
                         </label>
                         @endforeach
                     </div>
@@ -277,7 +283,7 @@
 
         {{-- ── ACTION BAR ────────────────────────────────────── --}}
         <div class="submit-bar">
-            <span class="hidden sm:inline text-[11px] font-medium text-gray-400 italic">File akan disimpan di folder privat terenkripsi.</span>
+            <span class="hidden sm:inline text-[11px] font-medium text-tertiary italic">File akan disimpan di folder privat terenkripsi.</span>
             <button type="submit" class="btn-primary !px-8 !py-3 !rounded-full shadow-lg">
                 Upload Sekarang
             </button>
@@ -287,16 +293,16 @@
 
 {{-- ── OVERLAY PROGRESS ────────────────────────────────── --}}
 <div class="progress-overlay" id="progressOverlay">
-    <div class="progress-card">
-        <div class="progress-icon">
+    <div class="progress-card" style="background: var(--bg-surface); border: 1px solid var(--border-subtle);">
+        <div class="progress-icon" style="background: var(--accent-light); color: var(--accent);">
             <svg class="animate-bounce" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a2 2 0 002 2h12a2 2 0 002-2v-1m-4-8l-4-4m0 0L8 8m4-4v12"/></svg>
         </div>
-        <h3 class="font-bold text-gray-900">Sedang Mengupload...</h3>
-        <p class="text-xs text-gray-500 mt-1">Harap tidak menutup halaman ini</p>
-        <div class="progress-bar-track mt-4">
-            <div class="progress-bar-fill" id="progressBar"></div>
+        <h3 class="font-bold text-primary">Sedang Mengupload...</h3>
+        <p class="text-xs text-tertiary mt-1">Harap tidak menutup halaman ini</p>
+        <div class="progress-bar-track mt-4" style="background: var(--bg-base);">
+            <div class="progress-bar-fill" id="progressBar" style="background: var(--accent);"></div>
         </div>
-        <p class="progress-label" id="progressLabel">0%</p>
+        <p class="progress-label text-primary" id="progressLabel">0%</p>
     </div>
 </div>
 
@@ -311,8 +317,8 @@
                         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
                     </div>
                     <div class="text-left overflow-hidden">
-                        <p class="text-sm font-bold text-indigo-950 truncate">${file.name}</p>
-                        <p class="text-[10px] text-gray-500 uppercase font-mono">${(file.size / 1024 / 1024).toFixed(2)} MB</p>
+                        <p class="text-sm font-bold text-primary truncate">${file.name}</p>
+                        <p class="text-[10px] text-tertiary uppercase font-mono">${(file.size / 1024 / 1024).toFixed(2)} MB</p>
                     </div>
                 </div>
             `;

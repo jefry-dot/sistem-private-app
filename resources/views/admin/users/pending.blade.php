@@ -63,16 +63,26 @@
                                         <td class="text-secondary text-sm">{{ $user->email }}</td>
                                         <td class="text-right text-[10px] font-mono text-tertiary">{{ $user->created_at->format('d M Y, H:i') }}</td>
                                         <td class="text-right">
-                                            <div class="flex justify-end gap-2">
+                                            <div class="row-actions">
+                                                {{-- Approve --}}
                                                 <form action="{{ route('admin.users.approve', $user) }}" method="POST" class="inline-block">
                                                     @csrf
-                                                    <button type="submit" class="text-accent hover:underline font-bold text-[11px] uppercase tracking-wider bg-accent-light px-3 py-1.5 rounded-lg border border-accent-muted">Setujui</button>
+                                                    <button type="submit" class="row-btn" title="Setujui Klien" style="color:var(--success); border-color:rgba(16, 185, 129, 0.2); background:rgba(16, 185, 129, 0.05);">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                                        </svg>
+                                                    </button>
                                                 </form>
                                                 
+                                                {{-- Reject/Delete --}}
                                                 <form action="{{ route('admin.users.destroy', $user) }}" method="POST" class="inline-block" onsubmit="return confirm('Tolak dan hapus pendaftaran ini?')">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" class="text-danger hover:underline font-bold text-[11px] uppercase tracking-wider px-3 py-1.5 rounded-lg">Tolak</button>
+                                                    <button type="submit" class="row-btn danger" title="Tolak Klien">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                                                        </svg>
+                                                    </button>
                                                 </form>
                                             </div>
                                         </td>
