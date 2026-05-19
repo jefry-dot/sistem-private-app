@@ -6,7 +6,7 @@
     </x-slot>
 
     <div class="py-6" 
-         x-data="{ addUserModal: {{ request('action') === 'add' ? 'true' : 'false' }} }" 
+         x-data="{ addUserModal: {{ $errors->any() ? 'true' : (request('action') === 'add' ? 'true' : 'false') }} }" 
          x-on:open-user-modal.window="addUserModal = true">
         
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -34,6 +34,21 @@
                 <div class="alert-success mb-6">
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
                     {{ session('success') }}
+                </div>
+            @endif
+
+            {{-- Error Summary --}}
+            @if($errors->any())
+                <div class="p-4 mb-6 rounded-xl bg-red-50 border border-red-100 text-red-600 text-xs font-medium">
+                    <div class="flex items-center gap-2 mb-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                        Terdapat kesalahan saat menyimpan data:
+                    </div>
+                    <ul class="list-disc list-inside space-y-1 ml-6">
+                        @foreach($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
                 </div>
             @endif
 
@@ -161,19 +176,23 @@
                         @csrf
                         <div>
                             <label class="section-label mb-2">Nama Lengkap</label>
-                            <input type="text" name="name" required class="form-input w-full" style="background: var(--bg-surface); color: var(--text-primary); border: 1px solid var(--border-subtle); padding: 0.5rem 0.75rem; border-radius: 8px;" placeholder="Nama klien...">
+                            <input type="text" name="name" value="{{ old('name') }}" required class="form-input w-full" style="background: var(--bg-surface); color: var(--text-primary); border: 1px solid var(--border-subtle); padding: 0.5rem 0.75rem; border-radius: 8px;" placeholder="Nama klien...">
+                            <x-input-error :messages="$errors->get('name')" class="mt-1" />
                         </div>
                         <div>
                             <label class="section-label mb-2">Username</label>
-                            <input type="text" name="username" required class="form-input w-full" style="background: var(--bg-surface); color: var(--text-primary); border: 1px solid var(--border-subtle); padding: 0.5rem 0.75rem; border-radius: 8px;" placeholder="username123...">
+                            <input type="text" name="username" value="{{ old('username') }}" required class="form-input w-full" style="background: var(--bg-surface); color: var(--text-primary); border: 1px solid var(--border-subtle); padding: 0.5rem 0.75rem; border-radius: 8px;" placeholder="username123...">
+                            <x-input-error :messages="$errors->get('username')" class="mt-1" />
                         </div>
                         <div>
                             <label class="section-label mb-2">Email Perusahaan</label>
-                            <input type="email" name="email" required class="form-input w-full" style="background: var(--bg-surface); color: var(--text-primary); border: 1px solid var(--border-subtle); padding: 0.5rem 0.75rem; border-radius: 8px;" placeholder="email@perusahaan.com">
+                            <input type="email" name="email" value="{{ old('email') }}" required class="form-input w-full" style="background: var(--bg-surface); color: var(--text-primary); border: 1px solid var(--border-subtle); padding: 0.5rem 0.75rem; border-radius: 8px;" placeholder="email@perusahaan.com">
+                            <x-input-error :messages="$errors->get('email')" class="mt-1" />
                         </div>
                         <div>
                             <label class="section-label mb-2">Password</label>
                             <input type="password" name="password" required class="form-input w-full" style="background: var(--bg-surface); color: var(--text-primary); border: 1px solid var(--border-subtle); padding: 0.5rem 0.75rem; border-radius: 8px;" placeholder="Password akses...">
+                            <x-input-error :messages="$errors->get('password')" class="mt-1" />
                         </div>
                         <div>
                             <label class="section-label mb-2">Grup</label>
@@ -181,11 +200,12 @@
                                  style="background: var(--bg-elevated); border: 1px solid var(--border-subtle);">
                                 @foreach($groups as $group)
                                 <label class="flex items-center gap-2 p-1 cursor-pointer">
-                                    <input type="checkbox" name="groups[]" value="{{ $group->id }}" class="w-3.5 h-3.5 rounded accent-accent">
+                                    <input type="checkbox" name="groups[]" value="{{ $group->id }}" {{ is_array(old('groups')) && in_array($group->id, old('groups')) ? 'checked' : '' }} class="w-3.5 h-3.5 rounded accent-accent">
                                     <span class="text-[11px] font-medium text-secondary" style="color: var(--text-secondary);">{{ $group->name }}</span>
                                 </label>
                                 @endforeach
                             </div>
+                            <x-input-error :messages="$errors->get('groups')" class="mt-1" />
                         </div>
 
                         <div class="pt-4 flex gap-3">
