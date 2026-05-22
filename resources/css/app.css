@@ -60,6 +60,14 @@
     display: none;
 }
 
+.admin-user-modal {
+    display: none;
+}
+
+.admin-user-modal.is-open {
+    display: block;
+}
+
 @media (max-width: 1023px) {
     .admin-sidebar-overlay.is-open {
         display: block;

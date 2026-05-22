@@ -5,9 +5,7 @@
         </h2>
     </x-slot>
 
-    <div class="py-6" 
-         x-data="{ addUserModal: {{ $errors->any() ? 'true' : (request('action') === 'add' ? 'true' : 'false') }} }" 
-         x-on:open-user-modal.window="addUserModal = true">
+    <div class="py-6">
         
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             
@@ -21,7 +19,7 @@
                         Kelola data client dan berikan akses ke grup yang sesuai.
                     </p>
                 </div>
-                <button @click="addUserModal = true" class="btn-primary">
+                <button type="button" class="btn-primary js-open-user-modal">
                     <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/>
                     </svg>
@@ -132,7 +130,7 @@
                                         <p style="font-size:0.8125rem;color:var(--text-tertiary);margin:0 0 1.25rem;">
                                             Daftarkan klien baru untuk memberikan akses ke file.
                                         </p>
-                                        <button @click="addUserModal = true" class="btn-primary">Tambah Client</button>
+                                        <button type="button" class="btn-primary js-open-user-modal">Tambah Client</button>
                                     </div>
                                 </td>
                             </tr>
@@ -144,22 +142,14 @@
         </div>
 
         {{-- ── MODAL TAMBAH CLIENT ──────────────────────────────────── --}}
-        <div x-show="addUserModal" 
-             class="fixed inset-0 z-[100] overflow-y-auto" 
-             style="display: none;"
-             x-transition:enter="transition ease-out duration-200"
-             x-transition:enter-start="opacity-0"
-             x-transition:enter-end="opacity-100"
-             x-transition:leave="transition ease-in duration-150"
-             x-transition:leave-start="opacity-100"
-             x-transition:leave-end="opacity-0">
+        <div id="addUserModal" 
+             class="admin-user-modal fixed inset-0 z-[100] overflow-y-auto {{ $errors->any() || request('action') === 'add' ? 'is-open' : '' }}">
             
             <div class="fixed inset-0 bg-slate-900/60 backdrop-filter blur-sm"></div>
 
             <div class="relative min-h-screen flex items-center justify-center p-4">
-                <div class="relative bg-surface w-full max-w-md rounded-2xl shadow-2xl overflow-hidden border border-subtle"
-                     style="background: var(--bg-surface); border: 1px solid var(--border-subtle);"
-                     @click.away="addUserModal = false">
+                <div class="admin-user-modal-panel relative bg-surface w-full max-w-md rounded-2xl shadow-2xl overflow-hidden border border-subtle"
+                     style="background: var(--bg-surface); border: 1px solid var(--border-subtle);">
                     
                     <div class="p-6 border-b border-subtle flex justify-between items-center bg-elevated"
                          style="background: var(--bg-elevated); border-bottom: 1px solid var(--border-subtle);">
@@ -167,7 +157,7 @@
                             <h3 class="font-bold text-primary" style="color: var(--text-primary);">Tambah Client Baru</h3>
                             <p class="text-[10px] text-tertiary uppercase tracking-widest mt-0.5" style="color: var(--text-tertiary);">Admin Control</p>
                         </div>
-                        <button @click="addUserModal = false" class="text-tertiary hover:text-primary">
+                        <button type="button" class="js-close-user-modal text-tertiary hover:text-primary" aria-label="Tutup modal tambah client">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
                         </button>
                     </div>
@@ -209,7 +199,7 @@
                         </div>
 
                         <div class="pt-4 flex gap-3">
-                            <button type="button" @click="addUserModal = false" class="btn-secondary flex-1 !py-2.5 !text-[11px]">Batal</button>
+                            <button type="button" class="js-close-user-modal btn-secondary flex-1 !py-2.5 !text-[11px]">Batal</button>
                             <button type="submit" class="btn-primary flex-1 !py-2.5 !text-[11px]">Simpan Client</button>
                         </div>
                     </form>
@@ -217,4 +207,34 @@
             </div>
         </div>
     </div>
+
+    @push('scripts')
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                const modal = document.getElementById('addUserModal');
+                if (!modal) return;
+
+                const openModal = () => modal.classList.add('is-open');
+                const closeModal = () => modal.classList.remove('is-open');
+
+                document.querySelectorAll('.js-open-user-modal').forEach((button) => {
+                    button.addEventListener('click', openModal);
+                });
+
+                document.querySelectorAll('.js-close-user-modal').forEach((button) => {
+                    button.addEventListener('click', closeModal);
+                });
+
+                modal.addEventListener('click', (event) => {
+                    if (!event.target.closest('.admin-user-modal-panel')) closeModal();
+                });
+
+                document.addEventListener('keydown', (event) => {
+                    if (event.key === 'Escape') closeModal();
+                });
+
+                window.addEventListener('open-user-modal', openModal);
+            });
+        </script>
+    @endpush
 </x-app-layout>
