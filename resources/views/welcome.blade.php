@@ -74,8 +74,8 @@
                             Buka Dashboard
                         </a>
                     @else
-                        <a href="{{ route('login') }}" class="block w-full py-4 bg-[#5e50a1] hover:bg-[#4c3f8a] text-white font-bold rounded-xl transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
-                            Masuk Akun
+                        <a href="{{ route('login') }}" class="block w-full py-4 bg-[#15803d] hover:bg-[#166534] text-white font-bold rounded-xl transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
+                            Login - Masuk Akun
                         </a>
                         
                         @if (Route::has('register'))

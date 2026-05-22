@@ -52,8 +52,8 @@
         </div>
 
         <div class="pt-4">
-            <button type="submit" class="w-full py-3.5 bg-accent hover:bg-accent-hover text-white font-bold rounded-xl transition-all shadow-lg hover:shadow-accent/20 transform hover:-translate-y-0.5">
-                {{ __('Masuk Sekarang') }}
+            <button type="submit" class="w-full py-3.5 bg-[#15803d] hover:bg-[#166534] text-white font-bold rounded-xl transition-all shadow-lg hover:shadow-green-900/20 transform hover:-translate-y-0.5">
+                {{ __('Login - Masuk Sekarang') }}
             </button>
         </div>
 

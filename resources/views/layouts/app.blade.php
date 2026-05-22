@@ -87,16 +87,16 @@
 
                 <div class="main-content">
                     {{-- ── TOP HEADER (Responsive Style) ── --}}
-                    <header class="top-header">
-                        <div class="flex items-center gap-4">
-                            <button @click="sidebarOpen = !sidebarOpen" class="lg:hidden text-secondary hover:text-primary p-2">
+                    <header class="top-header admin-top-header">
+                        <div class="admin-top-left">
+                            <button @click="sidebarOpen = !sidebarOpen" class="admin-menu-toggle lg:hidden" aria-label="Buka menu admin">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
                                 </svg>
                             </button>
                         </div>
 
-                        <div class="flex items-center gap-4 lg:gap-6">
+                        <div class="admin-top-actions">
                             {{-- Theme Toggle --}}
                             <button class="theme-toggle" id="themeToggleAdmin" title="Ganti Tema">
                                 <svg class="icon-moon" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -107,23 +107,23 @@
                                 </svg>
                             </button>
 
-                            <div class="flex items-center gap-4 lg:gap-6 text-[13px] font-medium text-secondary">
-                                <span class="hidden sm:inline-block hover:text-primary cursor-pointer">{{ Auth::user()->name }}</span>
+                            <div class="admin-user-actions text-[13px] font-medium text-secondary">
+                                <span class="admin-user-name hover:text-primary cursor-pointer">{{ Auth::user()->name }}</span>
                                 
-                                <a href="{{ route('profile.edit') }}" class="flex items-center gap-1 hover:text-primary cursor-pointer text-secondary no-underline">
+                                <a href="{{ route('profile.edit') }}" class="admin-top-link hover:text-primary cursor-pointer text-secondary no-underline" aria-label="Akun Saya">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                                     </svg>
-                                    Akun Saya
+                                    <span>Akun Saya</span>
                                 </a>
 
                                 <form method="POST" action="{{ route('logout') }}">
                                     @csrf
-                                    <button type="submit" class="flex items-center gap-1 hover:text-primary cursor-pointer border-0 bg-transparent text-secondary text-[13px] font-medium p-0">
+                                    <button type="submit" class="admin-top-link hover:text-primary cursor-pointer border-0 bg-transparent text-secondary text-[13px] font-medium" aria-label="Keluar">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
                                         </svg>
-                                        Keluar
+                                        <span>Keluar</span>
                                     </button>
                                 </form>
                             </div>
