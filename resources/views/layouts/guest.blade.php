@@ -17,26 +17,26 @@
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
-    <body class="font-sans text-gray-900 antialiased" style="background: url('/bg.png') repeat;">
-        <div class="min-h-screen flex flex-col">
-            <header class="bg-white shadow" style="border-bottom: 2px solid #ddd; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);">
+    <body class="guest-page font-sans text-gray-900 antialiased" style="background: #f4f7f6 url('/bg.png') repeat;">
+        <div class="guest-shell min-h-screen flex flex-col">
+            <header class="guest-header bg-white shadow" style="border-bottom: 2px solid #ddd; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);">
                 <div class="max-w-7xl mx-auto py-3 px-4 sm:py-4 sm:px-6 lg:px-8">
-                    <div class="flex justify-center items-center">
-                        <h1 class="flex items-center text-xl sm:text-2xl text-gray-800 font-bold m-0">
-                            <a href="/"><img src="{{ get_setting('site_logo', '/logo-2.png') }}" width="80" height="56" alt="Logo" class="mr-3 sm:mr-4 sm:w-[100px] sm:h-[70px]"></a>
-                            <span class="truncate">{{ get_setting('site_name', 'Mulia Grup') }}</span>
+                    <div class="flex justify-center items-center min-w-0">
+                        <h1 class="guest-brand flex items-center text-xl sm:text-2xl text-gray-800 font-bold m-0 min-w-0">
+                            <a href="/" class="guest-logo-link"><img src="{{ get_setting('site_logo', '/logo-2.png') }}" width="80" height="56" alt="Logo" class="guest-logo mr-3 sm:mr-4 sm:w-[100px] sm:h-[70px]"></a>
+                            <span class="guest-site-name truncate">{{ get_setting('site_name', 'Mulia Grup') }}</span>
                         </h1>
                     </div>
                 </div>
             </header>
 
-            <div class="flex-1 flex flex-col items-center justify-center p-6">
-                <div class="w-full sm:max-w-md px-8 py-8 bg-white shadow-lg overflow-hidden sm:rounded-lg border border-gray-200" style="border-radius: 8px;">
+            <div class="guest-main flex-1 flex flex-col items-center justify-center p-6">
+                <div class="guest-card w-full sm:max-w-md px-8 py-8 bg-white shadow-lg overflow-hidden sm:rounded-lg border border-gray-200" style="border-radius: 8px;">
                     {{ $slot }}
                 </div>
             </div>
 
-            <div class="text-center py-4 bg-white/80 border-t border-gray-200">
+            <div class="guest-footer text-center py-4 bg-white/80 border-t border-gray-200">
                 <p style="color:#093; margin: 0;"><b>Copyright &copy; 2026 Mulia Grup</b></p>
             </div>
         </div>

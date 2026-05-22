@@ -74,7 +74,8 @@
                 </div>
 
                 {{-- Mobile Sidebar Overlay --}}
-                <div x-show="sidebarOpen" 
+                <div x-cloak
+                     x-show="sidebarOpen" 
                      @click="sidebarOpen = false" 
                      class="fixed inset-0 bg-black/50 z-[90] lg:hidden"
                      x-transition:enter="transition opacity-0 ease-out duration-300"

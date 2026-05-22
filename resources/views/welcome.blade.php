@@ -56,8 +56,8 @@
             </style>
         @endif
     </head>
-    <body class="flex p-6 lg:p-8 items-center lg:justify-center min-h-screen flex-col">
-        <div class="max-w-md w-full bg-surface p-8 rounded-2xl shadow-xl border border-subtle text-center" style="background: var(--bg-surface); border: 1px solid var(--border-subtle);">
+    <body class="welcome-page flex p-6 lg:p-8 items-center lg:justify-center min-h-screen flex-col">
+        <div class="welcome-card max-w-md w-full bg-surface p-8 rounded-2xl shadow-xl border border-subtle text-center" style="background: var(--bg-surface); border: 1px solid var(--border-subtle);">
             <img src="{{ get_setting('site_logo', '/logo-2.png') }}" alt="{{ get_setting('site_name', 'Mulia Grup') }} Logo" class="mx-auto h-20 mb-8">
             
             <h1 class="text-3xl font-bold mb-4 text-primary" style="color: var(--text-primary);">{{ get_setting('site_name', 'Mulia Grup') }}</h1>

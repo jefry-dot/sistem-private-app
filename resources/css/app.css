@@ -323,6 +323,94 @@ body::before {
     transition: opacity 0.3s ease;
 }
 
+body.guest-page::before,
+body.welcome-page::before {
+    display: none;
+}
+
+body.guest-page,
+body.welcome-page {
+    background-color: #f4f7f6 !important;
+    color: #2d3748;
+}
+
+.guest-card,
+.welcome-card {
+    background: #ffffff !important;
+    color: #2d3748;
+}
+
+.welcome-card {
+    border-color: #edf2f7 !important;
+}
+
+@media (max-width: 640px) {
+    .guest-header .max-w-7xl {
+        padding: 0.75rem 1rem;
+    }
+
+    .guest-brand {
+        width: 100%;
+        justify-content: center;
+        font-size: 1rem;
+        gap: 0.5rem;
+    }
+
+    .guest-logo-link {
+        flex-shrink: 0;
+    }
+
+    .guest-logo {
+        width: 58px !important;
+        height: auto !important;
+        margin-right: 0.5rem !important;
+    }
+
+    .guest-site-name {
+        max-width: min(62vw, 15rem);
+    }
+
+    .guest-main {
+        justify-content: flex-start;
+        padding: 1rem;
+    }
+
+    .guest-card {
+        padding: 1.5rem 1rem !important;
+        border-radius: 14px !important;
+    }
+
+    .guest-footer {
+        padding: 0.75rem 1rem;
+        font-size: 0.78rem;
+    }
+
+    .welcome-page {
+        padding: 1rem !important;
+        justify-content: center;
+    }
+
+    .welcome-card {
+        padding: 1.5rem !important;
+        border-radius: 18px !important;
+    }
+}
+
+@media (max-width: 360px) {
+    .guest-logo {
+        width: 48px !important;
+    }
+
+    .guest-brand {
+        font-size: 0.92rem;
+    }
+
+    .guest-card,
+    .welcome-card {
+        padding: 1.15rem 0.85rem !important;
+    }
+}
+
 /* ─────────────────────────────────────────────────────────────
    LAYOUT SHELL
    ───────────────────────────────────────────────────────────── */
