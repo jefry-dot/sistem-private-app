@@ -69,28 +69,20 @@
 
             @if(Auth::check() && Auth::user()->role === 'admin')
                 {{-- ── SIDEBAR (Admin Only) ────────────────── --}}
-                <div :class="sidebarOpen ? 'admin-sidebar-wrapper open' : 'admin-sidebar-wrapper'">
+                <div id="adminSidebar" class="admin-sidebar-wrapper">
                     @include('layouts.sidebar')
                 </div>
 
                 {{-- Mobile Sidebar Overlay --}}
-                <div x-cloak
-                     x-show="sidebarOpen" 
-                     @click="sidebarOpen = false" 
-                     class="fixed inset-0 bg-black/50 z-[90] lg:hidden"
-                     x-transition:enter="transition opacity-0 ease-out duration-300"
-                     x-transition:enter-start="opacity-0"
-                     x-transition:enter-end="opacity-100"
-                     x-transition:leave="transition opacity-100 ease-in duration-200"
-                     x-transition:leave-start="opacity-100"
-                     x-transition:leave-end="opacity-0">
+                <div id="adminSidebarOverlay"
+                     class="admin-sidebar-overlay fixed inset-0 bg-black/50 z-[90] lg:hidden">
                 </div>
 
                 <div class="main-content">
                     {{-- ── TOP HEADER (Responsive Style) ── --}}
                     <header class="top-header admin-top-header">
                         <div class="admin-top-left">
-                            <button @click="sidebarOpen = !sidebarOpen" class="admin-menu-toggle lg:hidden" aria-label="Buka menu admin">
+                            <button type="button" id="adminMenuToggle" class="admin-menu-toggle lg:hidden" aria-label="Buka menu admin" aria-controls="adminSidebar" aria-expanded="false">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
                                 </svg>
@@ -172,6 +164,25 @@
         <footer class="app-footer">
             <p>{!! get_setting('footer_text', 'Copyright &copy; 2026 <strong>' . config('app.name') . '</strong>') !!}</p>
         </footer>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                const sidebar = document.getElementById('adminSidebar');
+                const overlay = document.getElementById('adminSidebarOverlay');
+                const toggle = document.getElementById('adminMenuToggle');
+
+                if (!sidebar || !overlay || !toggle) return;
+
+                const setOpen = (isOpen) => {
+                    sidebar.classList.toggle('open', isOpen);
+                    overlay.classList.toggle('is-open', isOpen);
+                    toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+                };
+
+                toggle.addEventListener('click', () => setOpen(!sidebar.classList.contains('open')));
+                overlay.addEventListener('click', () => setOpen(false));
+            });
+        </script>
 
         @stack('scripts')
     </body>

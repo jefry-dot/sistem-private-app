@@ -56,6 +56,16 @@
     }
 }
 
+.admin-sidebar-overlay {
+    display: none;
+}
+
+@media (max-width: 1023px) {
+    .admin-sidebar-overlay.is-open {
+        display: block;
+    }
+}
+
 /* ── SIDEBAR STYLE (Inner) ────────────────────────── */
 .sidebar {
     width: 100%;
@@ -176,6 +186,8 @@
     border: 0;
     background: transparent;
     cursor: pointer;
+    position: relative;
+    z-index: 60;
 }
 
 .admin-menu-toggle:hover {
