@@ -360,16 +360,14 @@
             }
         })
         .then(response => {
-            // Check if there's a redirect in the response or handle as success
-            window.location.href = "{{ route('admin.file.create') }}"; 
+            // Sukses: Reload halaman agar toast dari session muncul
+            window.location.reload(); 
         })
         .catch(error => {
             overlay.classList.remove('active');
             if (error.response && error.response.status === 422) {
-                // Validation error, reload to show errors from session or handle manually
-                // For simplicity, we'll re-submit without AJAX if there's a validation error 
-                // OR we could parse error.response.data.errors
-                form.submit(); 
+                // Validation error: reload to show errors and toast from session
+                window.location.reload(); 
             } else {
                 alert('Terjadi kesalahan saat mengunggah berkas.');
                 console.error(error);

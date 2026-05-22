@@ -23,8 +23,8 @@
 
         <!-- Email Address -->
         <div class="space-y-1">
-            <x-input-label for="email" :value="__('Alamat Email')" class="font-bold text-xs uppercase tracking-widest text-gray-500" />
-            <x-text-input id="email" class="block mt-1 w-full !rounded-xl !border-gray-200 focus:!border-accent focus:!ring-accent/10" type="email" name="email" :value="old('email')" required autocomplete="username" placeholder="nama@email.com" />
+            <x-input-label for="email" :value="__('Alamat Email (Opsional)')" class="font-bold text-xs uppercase tracking-widest text-gray-500" />
+            <x-text-input id="email" class="block mt-1 w-full !rounded-xl !border-gray-200 focus:!border-accent focus:!ring-accent/10" type="email" name="email" :value="old('email')" autocomplete="username" placeholder="nama@email.com" />
             <x-input-error :messages="$errors->get('email')" class="mt-1" />
         </div>
 

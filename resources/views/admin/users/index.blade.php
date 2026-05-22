@@ -185,8 +185,8 @@
                             <x-input-error :messages="$errors->get('username')" class="mt-1" />
                         </div>
                         <div>
-                            <label class="section-label mb-2">Email Perusahaan</label>
-                            <input type="email" name="email" value="{{ old('email') }}" required class="form-input w-full" style="background: var(--bg-surface); color: var(--text-primary); border: 1px solid var(--border-subtle); padding: 0.5rem 0.75rem; border-radius: 8px;" placeholder="email@perusahaan.com">
+                            <label class="section-label mb-2">Email Perusahaan <span class="text-[10px] opacity-50 font-normal">(Opsional)</span></label>
+                            <input type="email" name="email" value="{{ old('email') }}" class="form-input w-full" style="background: var(--bg-surface); color: var(--text-primary); border: 1px solid var(--border-subtle); padding: 0.5rem 0.75rem; border-radius: 8px;" placeholder="email@perusahaan.com">
                             <x-input-error :messages="$errors->get('email')" class="mt-1" />
                         </div>
                         <div>

@@ -88,13 +88,15 @@ class FileController extends Controller
             $originalName = $uploadedFile->getClientOriginalName();
             $displayName = $request->display_name ?? $originalName;
 
-            // Global uniqueness check
+            // Global uniqueness check (across all categories)
             $duplicate = File::where('original_name', $originalName)
                 ->orWhere('display_name', $displayName)
                 ->first();
 
             if ($duplicate) {
-                return back()->withInput()->withErrors(['file' => "Berkas dengan nama '" . ($duplicate->original_name === $originalName ? $originalName : $displayName) . "' sudah ada di sistem."]);
+                $errorMessage = "Gagal: Berkas dengan nama '" . ($duplicate->original_name === $originalName ? $originalName : $displayName) . "' sudah ada di sistem (Kategori: " . $duplicate->category->name . ").";
+                session()->flash('error', $errorMessage);
+                throw \Illuminate\Validation\ValidationException::withMessages(['file' => $errorMessage]);
             }
 
             $extension = $uploadedFile->getClientOriginalExtension();
@@ -135,6 +137,11 @@ class FileController extends Controller
                 }
             } catch (\Exception $e) {
                 \Log::warning("Gagal mengirim notifikasi: " . $e->getMessage());
+            }
+
+            if ($request->expectsJson()) {
+                session()->flash('success', 'Berkas berhasil diupload.');
+                return response()->json(['success' => true]);
             }
 
             return back()->with('success', 'Berkas berhasil diupload.');
